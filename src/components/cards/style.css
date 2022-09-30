@@ -1,0 +1,20 @@
+.default-card{
+    background-color: #fff;
+    border-radius: 11px;
+    padding-top: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid #DADADA;
+}
+.default-card .card-head svg{
+    margin-right: 5px;
+}
+.default-card .card-head span{
+    font-weight: 700;
+    color: black;
+    font-size: 14px;
+    line-height: 17px;  
+   align-items: center;
+}

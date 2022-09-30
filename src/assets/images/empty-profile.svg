@@ -1,0 +1,30 @@
+  <svg
+      width="47"
+      height="46"
+      viewBox="0 0 47 46"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <ellipse cx="23.5" cy="23" rx="23.5" ry="23" fill="#DADADA" />
+      <mask
+        id="mask0_2303_19935"
+        style="mask-type:alpha"
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+        width="47"
+        height="46"
+      >
+        <ellipse cx="23.5" cy="23" rx="23.5" ry="23" fill="#C4C4C4" />
+      </mask>
+      <g mask="url(#mask0_2303_19935)">
+        <ellipse
+          cx="23.5006"
+          cy="40.4804"
+          rx="17.86"
+          ry="10.12"
+          fill="#009AFF"
+        />
+      </g>
+      <ellipse cx="23.4991" cy="19.5495" rx="8.46" ry="8.28" fill="#009AFF" />
+    </svg>

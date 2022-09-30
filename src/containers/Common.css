@@ -1,0 +1,402 @@
+.top-nav-main {
+    position: fixed;
+    height: 93px;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    background: #FFFFFF;
+    z-index: 100;
+}
+
+
+.nav-brand img {
+    margin: 0;
+}
+
+.nav-brand {
+    font-family: Glacial Indifference;
+    margin: 24px 0px 0px 62px;
+    font-size: 30px;
+    height: 43px;
+    letter-spacing: -0.05em;
+}
+
+.nav-brand .d-flex {
+    /* margin-top: 12px; */
+    align-items: baseline;
+}
+
+.nav-brand h3 {
+    font-style: normal;
+    font-weight: 700;
+
+}
+
+.vl {
+    margin: 0 5px;
+}
+
+.nav-brand span {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+}
+
+.nav-profile {
+    align-items: center;
+    margin-right: 46px;
+    margin-top: 23px;
+}
+
+.nav-profile img {
+    margin: 0 12px 0 40px;
+    width: 47px;
+    height: 46px;
+}
+
+.nav-profile span {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.side-nav-main {
+    position: fixed;
+    width: 100px;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    background: #FFFFFF;
+    z-index: 99;
+
+}
+
+.side-nav-items {
+    margin-top: 105px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.side-nav-items hr {
+    width: 80%;
+    margin: 16px;
+    border-top: 1px solid #353434;
+    ;
+}
+
+.side-nav-items button {
+    border: 1px solid #DADADA;
+    padding: 12px;
+    width: 56px;
+    height: 50px;
+    display: block;
+    margin-top: 22px;
+}
+
+.sheet-button {
+    position: absolute;
+    left: 144px;
+    border-radius: 11px !important;
+    border: 1px solid #DADADA !important;
+    background-color: #FFFFFF !important;
+    font-style: normal;
+    font-weight: 700 !important;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 17px 15px !important;
+}
+
+.sheet-button svg {
+    filter: invert(0.5);
+    margin-right: 10px;
+}
+
+.sheet-search {
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 38px;
+    padding: 17px;
+    height: 52px;
+}
+
+.sheet-search input {
+    border: none;
+    outline: none;
+    line-height: 17px;
+    font-weight: 400;
+    color: #000000;
+    width: 100%;
+    font-size: 16px;
+    margin-left: 15px;
+}
+
+.filters {
+    margin-top: 48px;
+}
+
+.filter-dropdowns {
+
+    margin-left: 44px;
+}
+
+.css-1okebmr-indicatorSeparator {
+    display: none !important;
+}
+
+.filter-dropdowns-container {
+    width: 261px !important;
+    height: 50px !important;
+    background-color: #000000;
+}
+
+.filter-dropdowns__control {
+    outline: none !important;
+    background: #FFFFFF;
+    border: 1px solid #DADADA !important;
+    border-radius: 11px !important;
+    width: 261px !important;
+    height: 50px !important;
+}
+
+.filter-dropdowns__option {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 16px !important;
+}
+
+.filter-dropdowns__menu-list {
+    border-radius: 11px !important;
+}
+
+.new-sheet-button {
+    background: linear-gradient(90deg, rgba(0, 198, 251, 0.9) 0%, rgba(0, 91, 234, 0.9) 100%);
+    border: 1px solid #DADADA;
+    border-radius: 11px !important;
+    height: 52px;
+    margin-right: 44px;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    color: #FFFFFF;
+}
+
+.sheet-list {}
+
+.start-type-modal h5 {
+    padding-top: 30px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.start-type-modal .modal-body {
+    margin-top: 48px;
+
+}
+
+.sheet-detail-modal .modal-lg,
+.start-type-modal .modal-lg {
+    max-width: 631px;
+}
+
+.start-type-modal button {
+    background: linear-gradient(90deg, #00C6FB 0%, #005BEA 100%);
+    border: 1px solid #DADADA;
+    border-radius: 11px;
+    height: 90px;
+    width: 100px;
+}
+
+.start-type-modal button svg {
+    height: 44px;
+}
+
+.start-option h6 {
+    margin-top: 24px;
+    font-family: Glacial Indifference;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+}
+
+.start-option p {
+    font-family: Glacial Indifference;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+}
+
+.sheet-detail-modal .modal-header {
+    background: #D0EBFF;
+    border: 1px solid #DADADA;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    display: flex;
+    justify-content: center;
+}
+
+.sheet-detail-modal .modal-body p {
+    margin: 0 0 2px 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+
+}
+
+.sheet-detail-modal-input {
+    outline: none;
+    background: #FFFFFF;
+    border: 1px solid #DADADA;
+    border-radius: 11px;
+    width: 100%;
+    margin-bottom: 10px;
+    height: 38px;
+    padding: 0 10px;
+}
+
+.sheet-detail-dropdowns .col-6 {
+    width: 48%;
+}
+
+.start-button {
+    margin: 38px 0;
+    background: linear-gradient(90deg, #00C6FB 0%, #005BEA 100%);
+    border: 1px solid #DADADA;
+    border-radius: 11px;
+    padding: 10px 20px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+}
+
+.create-sheet {
+    background-color: #FFFFFF;
+    border: 1px solid #DADADA;
+    border-radius: 6px;
+    margin: 186px 42px;
+}
+
+.create-sheet .col-6,
+.create-sheet .col-3 {
+    border: 1px solid #DADADA;
+}
+
+.create-sheet .col-3 {}
+
+.row-title {
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-bottom: 1px solid #DADADA;
+}
+
+.field {
+    border: 1px solid #DADADA;
+}
+
+.field:hover {
+    background: rgba(208, 235, 255, 0.65);
+}
+
+.field-type {
+    background: rgba(229, 229, 229, 0.49);
+    padding: 11px 16px;
+    border: 1px solid #DADADA;
+}
+
+.draggable {
+    width: 50%;
+    padding: 11px 16px;
+}
+
+
+.draggable:active {
+    /* background: rgba(208, 235, 255, 0.65); */
+}
+
+.drop-area {
+    min-height: 800px;
+}
+
+.section-field {
+    padding-left: 17px;
+    margin-bottom: 20px;
+    background: rgba(208, 235, 255, 0.65);
+    border: 1px solid #DADADA;
+}
+
+.checklist-field input,
+.section-field input {
+    display: block;
+    outline: none;
+    background: transparent;
+    border: none;
+    margin-top: 8px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.section-field input::placeholder {
+    color: #000000;
+}
+
+.checklist-field {
+    padding: 17px;
+    margin-bottom: 20px;
+    /* background: rgba(208, 235, 255, 0.65); */
+    /* border: 1px solid #DADADA; */
+}
+
+.checklist-options {
+    background: #F7F8FA;
+    border: 1px solid #DADADA;
+    border-radius: 11px;
+}
+
+.checklist-options div {
+    padding: 0 20px;
+
+}
+
+.checklist-options-input {
+    padding: 7px;
+    display: inline !important;
+    background: #FFFFFF !important;
+    border: 1px solid #DADADA !important;
+    border-radius: 11px !important;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    width: 100%;
+    margin: 0 10px;
+}
+
+.checklist-options button {
+    background: none;
+    border: none;
+    outline: none;
+}
+.add-opt-button{
+    margin-left: 38px;
+    margin-top: 10px;
+    margin-bottom: 16px;
+}
+.add-opt-button svg{
+    filter: invert(0.5);
+    height: 15px;
+
+}
+
+
+/* TODO: Remove unnecessary classes */
