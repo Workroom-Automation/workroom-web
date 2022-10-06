@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "../../components/cards/defaultCard";
 import NotificationBadgeIcon from "remixicon-react/NotificationBadgeLineIcon";
 import ServerIcon from "remixicon-react/ServerLineIcon";
@@ -6,6 +6,8 @@ import AddIcon from "remixicon-react/AddCircleLineIcon";
 import CustomButton from "../../components/button";
 import { useNavigate } from "react-router-dom";
 import WorkSpaceList from "./workSpaceList";
+import AddWorkspaceModal from "./addWorkspaceModal";
+import SettingModal from "./settingModal";
 const RequestContent = () => {
   let requestCount = 2;
   return (
@@ -22,14 +24,54 @@ export default function Home() {
       peopleCount: 11,
       adminName: "Chaitanya Kumar",
       appList: {
-        lineApps: [{ appName: "CTQ System" }, { appName: "CAPA System" }],
+        lineApps: [
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+        ],
         userApps: [{ appName: "Supplier PDIs" }],
       },
     },
-    {},
+     {
+      name: "Quality Workroom",
+      appCount: 12,
+      peopleCount: 11,
+      adminName: "Chaitanya Kumar",
+      appList: {
+        lineApps: [
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+          { appName: "CTQ System" },
+          { appName: "CAPA System" },
+        ],
+        userApps: [{ appName: "Supplier PDIs" }],
+      },
+    },
   ];
   let navigate = useNavigate();
   let userName = "Abhinav";
+  const [showWorkspaceModal, setShowWorkspaceModal] = useState(false);
   return (
     <div style={{ padding: "35px 33px 0" }}>
       <div className="d-flex justify-content-between">
@@ -66,12 +108,19 @@ export default function Home() {
             background="gradient"
             icon={AddIcon}
             color="#ffffff"
+            onClick={() => {
+              setShowWorkspaceModal(true);
+            }}
           />
         </div>
       </div>
       <div>
         <WorkSpaceList data={workspaceData} />
       </div>
+      <AddWorkspaceModal
+        showWorkspaceModal={showWorkspaceModal}
+        setShowWorkspaceModal={setShowWorkspaceModal}
+      />
     </div>
   );
 }

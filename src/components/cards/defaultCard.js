@@ -4,6 +4,7 @@ import "./style.css";
 
 export default function Card(props) {
   const {
+    onClick = () => {},
     title = "",
     titleIcon: TitleIcon = null,
     content: Content = () => {
@@ -13,7 +14,7 @@ export default function Card(props) {
     className = "",
   } = props;
   return (
-    <div style={style} className={className + `card default-card`}>
+    <div onClick={onClick} style={style} className={className + `card default-card`}>
       <div className="card-head">
         {TitleIcon && <TitleIcon color="#7D7676" size="16" />}
         {title && <span>{title}</span>}

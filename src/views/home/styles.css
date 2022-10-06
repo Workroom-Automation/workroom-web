@@ -1,0 +1,42 @@
+.app-table {
+    width: 100%;
+    text-align: center;
+    border-radius: 11px;
+}
+
+.app-table th {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+    border: 1px solid #DADADA;
+    color: #7D7676;
+    padding: 25px 0;
+   
+}
+.app-table td{
+    border: 1px solid #DADADA;
+    font-size: 14px;
+    padding: 25px 8px;
+}
+.app-table tr {
+    /* border: 1px solid #DADADA; */
+}
+
+.setting-modal .modal-body{
+    overflow-y: scroll !important;
+    max-height: 500px !important;
+}
+
+::-webkit-scrollbar-track{
+
+}
+::-webkit-scrollbar{
+
+}
+::-webkit-scrollbar-thumb{
+
+}
+::-webkit-scrollbar-thumb:hover{
+    
+}
