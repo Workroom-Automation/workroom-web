@@ -6,19 +6,21 @@ export default function CustomButton({
   title = "",
   color = "#00000",
   fontSize = "14px",
-  width="100%",
+  width = "100%",
   fontWeight = "700",
-  onClick=() => {},
-  border= "none",
-  height="auto",
+  onClick = () => {},
+  border = "none",
+  height = "auto",
+  borderRadius = "11px",
 }) {
   return (
     <button
-    onClick={onClick}
+      onClick={onClick}
       className="btn"
       style={{
-        height:height,
-        borderRadius: "11px",
+        alignItems:"center",
+        height: height,
+        borderRadius: borderRadius,
         width: width,
         padding: padding,
         outline: "none",
@@ -31,9 +33,11 @@ export default function CustomButton({
       }}
     >
       {Icon && <Icon color={background === "#FFFFFF" ? "#7D7676" : "white"} />}
-    { title&& <span style={{ color: color, marginLeft: "2.5px", fontSize: fontSize }}>
-        {title}
-      </span>}
+      {title && (
+        <span style={{ color: color, marginLeft: Icon?"2.5px":0, fontSize: fontSize}}>
+          {title}
+        </span>
+      )}
     </button>
   );
 }

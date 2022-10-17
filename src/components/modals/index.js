@@ -21,9 +21,9 @@ export default function CustomModal({
       className={className}
     >
       {/* <Header/> */}
-      {ModalHeader && (
+      {Header && (
         <Modal.Header style={{ border: "none" }}>
-          <Header />
+         <Header/>
         </Modal.Header>
       )}
 

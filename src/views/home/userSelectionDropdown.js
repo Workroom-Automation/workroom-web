@@ -13,6 +13,7 @@ export default function UserSelectionDropdown({
   value = [],
   onChange = () => {},
   setValue = () => {},
+  border="1px solid #DADADA"
 }) {
   const customDropdownStyle = {
     container: (provided, state) => {
@@ -37,7 +38,7 @@ export default function UserSelectionDropdown({
         ...provided,
         minHeight: "52px",
         outline: "none",
-        border: "1px solid #DADADA",
+        border: border,
         borderRadius: "11px",
       };
     },

@@ -15,8 +15,9 @@ export default function SideBar() {
       route: "/masterData",
     },
     {
-      name: "Edit",
+      name: "People",
       icon: ({ color }) => <UserIcon color={color} />,
+      route: "/people",
     },
     {
       name: "CheckList",
@@ -54,6 +55,7 @@ export default function SideBar() {
               }}
               onClick={(e) => {
                 setSelected(item.name);
+                console.log(item.route);
                 item.route&&navigate(item.route);
               }}
               className="btn"

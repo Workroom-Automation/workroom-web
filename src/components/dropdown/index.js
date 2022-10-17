@@ -1,7 +1,7 @@
 import React from "react";
 import Select from "react-select";
 
-export default function DropDown({
+export default function CustomDropdown({
   options = [],
   placeholder = "",
   onChange = () => {},

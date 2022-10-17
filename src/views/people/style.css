@@ -1,0 +1,47 @@
+.people-table {
+    /* padding-right: 28px; */
+    text-align: center;
+    font-size: 14px;
+}
+
+.people-table table {
+    background: #ffffff;
+    border-radius: 11px;
+    width: 100%;
+    box-sizing: border-box;
+
+}
+
+.people-table table th {
+    /* padding: 22px 0; */
+    border-bottom: 1px solid #DADADA;
+    font-weight: 400;
+    color: #7D7676;
+    height: 62px;
+}
+
+.people-table table td {
+    height: 62px;
+    border-bottom: 1px solid #DADADA;
+}
+
+.add-user-input {
+    border: 1px solid #DADADA;
+    border-radius: 11px;
+    padding: 8.35px 25px 16px 14px;
+    display: flex;
+    flex-direction: column;
+}
+.add-user-input:last-child{
+    margin-top: 7px;
+    margin-bottom: 22px;
+}
+.add-user-input label{
+    font-size: 14px;
+    color: #7D7676;
+}
+.add-user-input input{
+    outline: none;
+    border: none;
+    width: 50%;
+}
