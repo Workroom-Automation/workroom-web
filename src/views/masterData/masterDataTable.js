@@ -7,6 +7,7 @@ import MoreIcon from "remixicon-react/More2LineIcon";
 import CustomButton from "../../components/button";
 import AddIcon from "remixicon-react/AddCircleLineIcon";
 import AddNewModal from "../../components/modals/AddNewModal";
+import SearchInput from "../../components/inputs/searchInput";
 export default function MasterDataTable() {
   const processes = [
     { processName: "TY Sub Assembly", appCount: 11 },
@@ -30,11 +31,15 @@ export default function MasterDataTable() {
             background: "#ffffff",
             borderRadius: "11px 0 0 0",
             height: "76px",
+            display: "flex",
+            justifyContent:"center",
+            alignItems:"center"
           }}
         >
-          <div className="search-input">
-            <SearchIcon color="#7D7676" /> <input placeholder="Search" />
-          </div>
+          <SearchInput
+          width="90%"
+          />
+        
         </div>
         <div style={{ background: "#ffffff" }}>
           {apps.map((app, index) => {

@@ -32,7 +32,7 @@ function App() {
         style={{
           display:
             routesWithNavigation.includes(currentRoute) &&
-            currentRoute != "/home"
+            currentRoute != "/"
               ? "block"
               : "none",
         }}

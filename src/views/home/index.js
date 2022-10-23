@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "../../components/cards/defaultCard";
 import NotificationBadgeIcon from "remixicon-react/NotificationBadgeLineIcon";
 import ServerIcon from "remixicon-react/ServerLineIcon";
 import AddIcon from "remixicon-react/AddCircleLineIcon";
 import CustomButton from "../../components/button";
 import { useNavigate } from "react-router-dom";
-import WorkSpaceList from "./workSpaceList";
+import WorkroomList from "./workroomList";
 import AddWorkspaceModal from "./addWorkspaceModal";
-import SettingModal from "./settingModal";
+import apiUrls from "../../apis/apis";
+import apiClient from "../../apis/api-client";
+import { getWorkrooms } from "./api";
+
 const RequestContent = () => {
   let requestCount = 2;
   return (
@@ -17,58 +20,62 @@ const RequestContent = () => {
   );
 };
 export default function Home() {
-  const workspaceData = [
-    {
-      name: "Quality Workroom",
-      appCount: 12,
-      peopleCount: 11,
-      adminName: "Chaitanya Kumar",
-      appList: {
-        lineApps: [
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-        ],
-        userApps: [{ appName: "Supplier PDIs" }],
-      },
-    },
-     {
-      name: "Quality Workroom",
-      appCount: 12,
-      peopleCount: 11,
-      adminName: "Chaitanya Kumar",
-      appList: {
-        lineApps: [
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-          { appName: "CTQ System" },
-          { appName: "CAPA System" },
-        ],
-        userApps: [{ appName: "Supplier PDIs" }],
-      },
-    },
-  ];
+  const [workroomData, setWorkroomData] = useState([]);
+  useEffect(() => {
+    getWorkrooms((data) => setWorkroomData(data));
+  }, []);
+  // const workroomData = [
+  //   {
+  //     name: "Quality Workroom",
+  //     appCount: 12,
+  //     peopleCount: 11,
+  //     adminName: "Chaitanya Kumar",
+  //     appList: {
+  //       lineApps: [
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //       ],
+  //       userApps: [{ appName: "Supplier PDIs" }],
+  //     },
+  //   },
+  //   {
+  //     name: "Quality Workroom",
+  //     appCount: 12,
+  //     peopleCount: 11,
+  //     adminName: "Chaitanya Kumar",
+  //     appList: {
+  //       lineApps: [
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //         { appName: "CTQ System" },
+  //         { appName: "CAPA System" },
+  //       ],
+  //       userApps: [{ appName: "Supplier PDIs" }],
+  //     },
+  //   },
+  // ];
   let navigate = useNavigate();
   let userName = "Abhinav";
   const [showWorkspaceModal, setShowWorkspaceModal] = useState(false);
@@ -115,7 +122,7 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <WorkSpaceList data={workspaceData} />
+        <WorkroomList data={workroomData} />
       </div>
       <AddWorkspaceModal
         showWorkspaceModal={showWorkspaceModal}

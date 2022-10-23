@@ -3,6 +3,8 @@ import CustomButton from "../../components/button";
 import CustomModal from "../../components/modals";
 import BuildingIcon from "remixicon-react/Building3LineIcon";
 import UserSelectionDropdown from "./userSelectionDropdown";
+import { createWorkroomApp } from "./api";
+import { appTypes } from "../../utils/constant";
 const Header = () => {
   return (
     <div style={{ fontSize: "18px" }}>
@@ -10,8 +12,7 @@ const Header = () => {
     </div>
   );
 };
-const Body = () => {
-
+const Body = ({ selectedWorkroomId, setShowCreateAppModal }) => {
   const fieldHeadingStyle = {
     fontSize: "14px",
     marginBottom: "12px",
@@ -19,60 +20,63 @@ const Body = () => {
   };
   const [users, setUsers] = useState([]);
   const [selectedAppType, setSelectedAppType] = useState();
-  useEffect(() => {
-    console.log(users);
-  }, [users]);
-
+  const [appName, setAppName] = useState("");
+ 
+  const onSubmit = () => {
+    if (users.length > 0 && selectedAppType && appName) {
+      createWorkroomApp(
+        {
+          name: appName,
+          type: selectedAppType,
+          user: [...users],
+          workroom_id: selectedWorkroomId,
+        },
+        () => {setShowCreateAppModal(false)}
+      );
+    } else {
+      alert("Please fill all the fields");
+    }
+  };
   return (
     <div>
       <div style={fieldHeadingStyle}>App Type</div>
       <div className="row">
-        <div className="col-6">
-          <CustomButton
-            onClick={() => setSelectedAppType("Line App")}
-            fontWeight={selectedAppType === "Line App" ? "700" : "400"}
-            padding="21px"
-            border={
-              selectedAppType === "Line App"
-                ? "1px solid #009AFF"
-                : "1px solid #DADADA"
-            }
-            title="Line App"
-            background={selectedAppType === "Line App" ? "#D0EBFF" : "#ffffff"}
-            icon={() => (
-              <i style={{ marginRight: "7px" }}>
-                <BuildingIcon
-                  color={selectedAppType === "Line App" ? "#000000" : "#7D7676"}
-                />
-              </i>
-            )}
-          />
-        </div>
-        <div className="col-6">
-          <CustomButton
-            onClick={() => setSelectedAppType("User App")}
-            fontWeight={selectedAppType === "User App" ? "700" : "400"}
-            padding="21px"
-            border={
-              selectedAppType === "User App"
-                ? "1px solid #009AFF"
-                : "1px solid #DADADA"
-            }
-            title="User App"
-            background={selectedAppType === "User App" ? "#D0EBFF" : "#ffffff"}
-            icon={() => (
-              <i style={{ marginRight: "7px" }}>
-                <BuildingIcon
-                  color={selectedAppType === "User App" ? "#000000" : "#7D7676"}
-                />
-              </i>
-            )}
-          />
-        </div>
+        {appTypes.map((appType, id) => {
+          return (
+            <div key={id} className="col-6">
+              <CustomButton
+                onClick={() => setSelectedAppType(appType.value)}
+                fontWeight={selectedAppType === "Line App" ? "700" : "400"}
+                padding="21px"
+                border={
+                  selectedAppType === appType.value
+                    ? "1px solid #009AFF"
+                    : "1px solid #DADADA"
+                }
+                title={appType.label}
+                background={
+                  selectedAppType === appType.value ? "#D0EBFF" : "#ffffff"
+                }
+                icon={() => (
+                  <i style={{ marginRight: "7px" }}>
+                    <BuildingIcon
+                      color={
+                        selectedAppType === appType.value
+                          ? "#000000"
+                          : "#7D7676"
+                      }
+                    />
+                  </i>
+                )}
+              />
+            </div>
+          );
+        })}
         <div style={{ ...fieldHeadingStyle, marginTop: "10px" }}>App Name</div>
         <div className="row">
-          {" "}
           <input
+            value={appName}
+            onChange={(e) => setAppName(e.target.value)}
             className="input"
             style={{
               marginLeft: "11px",
@@ -89,16 +93,14 @@ const Body = () => {
         </div>
         <div style={{ ...fieldHeadingStyle, marginTop: "10px" }}>Add Users</div>
         <div className="">
-          <UserSelectionDropdown
-            value={users}
-            setValue={setUsers}
-          />
+          <UserSelectionDropdown value={users} setValue={setUsers} />
         </div>
       </div>
+      <Footer onSubmit={onSubmit} />
     </div>
   );
 };
-const Footer = () => {
+const Footer = ({ onSubmit }) => {
   return (
     <div style={{ margin: "30px 0" }} className="row justify-content-center">
       <div style={{ width: "180px" }}>
@@ -106,6 +108,7 @@ const Footer = () => {
           title="Create New App"
           background="gradient"
           color="white"
+          onClick={onSubmit}
         />
       </div>
     </div>
@@ -114,13 +117,14 @@ const Footer = () => {
 export default function CreateAppModal({
   showCreateAppModal,
   setShowCreateAppModal,
+  selectedWorkroomId,
 }) {
   return (
     <div>
       <CustomModal
         header={() => <Header />}
-        body={Body}
-        footer={Footer}
+        body={() => <Body setShowCreateAppModal={setShowCreateAppModal} selectedWorkroomId={selectedWorkroomId} />}
+        // footer={Footer}
         show={showCreateAppModal}
         setShow={setShowCreateAppModal}
       />

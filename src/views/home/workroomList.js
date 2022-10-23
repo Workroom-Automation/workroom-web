@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "../../components/cards/defaultCard";
 import { logo, emptyProfile } from "../../assets/images/index";
 import MenuIcon from "remixicon-react/More2LineIcon";
@@ -8,11 +8,15 @@ import AddIcon from "remixicon-react/AddLineIcon";
 import SettingIcon from "remixicon-react/Settings2LineIcon";
 import CreateAppModal from "./createAppModal";
 import SettingModal from "./settingModal";
+import { getWorkroomApps } from "./api";
+import { appTypes } from "../../utils/constant";
 const CardContent = ({
-  workspace,
+  workroom,
   setShowCreateAppModal,
   setShowSettingModal,
+  setSelectedWorkroomId,
 }) => {
+  const [apps, setApps] = useState()
   const countCardStyle = {
     height: "32px",
     padding: "17px 8px",
@@ -24,12 +28,19 @@ const CardContent = ({
     border: "1px solid #009AFF",
     cursor: "pointer",
   };
+  useEffect(() => {
+    getWorkroomApps({workroom_id:workroom.id}, (data) => {
+    setApps(data.applications)
+    })
+  }, [])
+  
   return (
     <div>
       <div className="d-flex justify-content-between ">
+        
         <div>
           <img height="33px" src={logo} />
-          <b style={{ fontSize: "14px" }}>{workspace?.name}</b>
+          <b style={{ fontSize: "14px" }}>{workroom?.name}</b>
         </div>
         <div style={{ height: "50px" }} className="d-flex">
           {/* <CustomButton
@@ -48,9 +59,10 @@ const CardContent = ({
             onClick={() => {
               console.log("clicked");
               setShowCreateAppModal(true);
+              setSelectedWorkroomId(workroom?.id);
             }}
             content={() => (
-              <div>
+              <div >
                 <AddIcon color=" #009AFF" />
                 Create New App
               </div>
@@ -68,7 +80,9 @@ const CardContent = ({
       </div>
       <hr style={{ margin: "0 -17px" }} />
 
-      <div className="row m-0 ">
+      {appTypes.map((type,id)=>{
+        return (
+          <div key={id} className="row m-0 ">
         <span
           style={{
             color: " #7D7676",
@@ -77,9 +91,10 @@ const CardContent = ({
             marginTop: "27px",
           }}
         >
-          Line Apps ({workspace?.appList?.lineApps?.length})
+          {type.label} ({apps?.filter((app)=>app.type===type.value).length})
         </span>
-        {workspace?.appList?.lineApps?.slice(0, 6).map((app, index) => {
+        {apps?.slice(0, 6).map((app, index) => {
+          if(app.type===type.value)
           return (
             <div key={index} className="d-flex flex-column   mb-4 col-2">
               <CustomButton
@@ -88,42 +103,28 @@ const CardContent = ({
                 border=" 1px solid #DADADA"
                 icon={() => <BillIcon color="#09121F" />}
               />
-              <b style={{ fontSize: "14px" }}>{app.appName}</b>
+              <b style={{ fontSize: "14px" }}>{app.name}</b>
             </div>
           );
         })}
       </div>
-      <div className="row m-0">
-        <span
-          style={{ color: " #7D7676", fontSize: "14px", marginBottom: "22px" }}
-        >
-          User Apps ({workspace?.appList?.userApps?.length})
-        </span>
-        {workspace?.appList?.userApps?.slice(0, 5).map((app, index) => {
-          return (
-            <div key={index} className="d-flex flex-column mb-4 col-2">
-              <CustomButton
-                width="80px"
-                height="60px"
-                border=" 1px solid #DADADA"
-                icon={() => <BillIcon color="#09121F" />}
-              />
-              <b style={{ fontSize: "14px" }}>{app.appName}</b>
-            </div>
-          );
-        })}
-      </div>
+        )
+      })}
+   
     </div>
   );
 };
-export default function WorkSpaceList({ data }) {
+export default function WorkroomList({ data }) {
   const [showCreateAppModal, setShowCreateAppModal] = useState(false);
   const [showSettingModal, setShowSettingModal] = useState(false);
+  const [selectedWorkroomId, setSelectedWorkroomId] = useState(null);
+  useEffect(() => {
+    console.log(data);
+  }, []);
   return (
     <div className="row">
-      {data &&
-        data.length > 0 &&
-        data.map((workspace, idx) => {
+      {data && data.length > 0 ? (
+        data.map((workroom, idx) => {
           return (
             <div className="col-6" key={idx}>
               <Card
@@ -133,16 +134,21 @@ export default function WorkSpaceList({ data }) {
                 }}
                 content={(props) => (
                   <CardContent
+                    setSelectedWorkroomId={setSelectedWorkroomId}
                     setShowCreateAppModal={setShowCreateAppModal}
-                    workspace={workspace}
+                    workroom={workroom}
                     setShowSettingModal={setShowSettingModal}
                   />
                 )}
               />
             </div>
           );
-        })}
+        })
+      ) : (
+        <center>No Workroom Created</center>
+      )}
       <CreateAppModal
+        selectedWorkroomId={selectedWorkroomId}
         setShowCreateAppModal={setShowCreateAppModal}
         showCreateAppModal={showCreateAppModal}
       />

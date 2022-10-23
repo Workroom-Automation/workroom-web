@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { logo } from "../../assets/images";
 import CustomButton from "../../components/button";
 import CustomModal from "../../components/modals";
+import { createWorkroom } from "./api";
 import UserSelectionDropdown from "./userSelectionDropdown";
+
 const Header = () => {
   return (
     <div style={{ fontSize: "18px" }}>
@@ -11,7 +13,7 @@ const Header = () => {
     </div>
   );
 };
-const Footer = () => {
+const Footer = ({ onSubmit }) => {
   return (
     <div style={{ margin: "30px 0" }} className="row justify-content-center">
       <div style={{ width: "205px" }}>
@@ -19,14 +21,21 @@ const Footer = () => {
           title="Create New Workroom"
           background="gradient"
           color="white"
+          onClick={onSubmit}
         />
       </div>
     </div>
   );
 };
-const Body = () => {
- 
-  const [users, setUsers] = useState([]);
+const Body = ({ setShowWorkspaceModal}) => {
+  const [adminUsers, setAdminUsers] = useState([]);
+  const [workroomName, setWorkroomName] = useState();
+  const onSubmit = async () => {
+    const newWorkroom = await createWorkroom({
+      name: workroomName,
+      admins: adminUsers,
+    }, ()=>{ setShowWorkspaceModal(false)});
+  };
   return (
     <div>
       <div
@@ -35,20 +44,22 @@ const Body = () => {
         Workroom Name
       </div>
       <input
+        value={workroomName}
+        onChange={(e) => setWorkroomName(e.target.value)}
         style={{
           width: "100%",
           height: "52px",
           outline: "none",
           border: "1px solid #DADADA",
           paddingLeft: "16px",
-          borderRadius:'11px'
+          borderRadius: "11px",
         }}
       />
-      <div style={{ fontSize: "14px",margin:"17px 0px 7px 11px"}}>Assign Admin</div>
-        <UserSelectionDropdown
-          value={users}
-          setValue={setUsers}
-          />
+      <div style={{ fontSize: "14px", margin: "17px 0px 7px 11px" }}>
+        Assign Admin
+      </div>
+      <UserSelectionDropdown value={adminUsers} setValue={setAdminUsers} />
+      <Footer onSubmit={onSubmit} />
     </div>
   );
 };
@@ -59,8 +70,7 @@ export default function AddWorkspaceModal({
   return (
     <div>
       <CustomModal
-        body={() => <Body />}
-        footer={() => <Footer/>}
+        body={() => <Body  setShowWorkspaceModal={ setShowWorkspaceModal}/>}
         header={() => <Header />}
         show={showWorkspaceModal}
         setShow={setShowWorkspaceModal}

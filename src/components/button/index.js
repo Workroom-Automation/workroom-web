@@ -12,6 +12,7 @@ export default function CustomButton({
   border = "none",
   height = "auto",
   borderRadius = "11px",
+  margin="0px",
 }) {
   return (
     <button
@@ -26,6 +27,7 @@ export default function CustomButton({
         outline: "none",
         border: border,
         fontWeight: fontWeight,
+        margin: margin,
         background:
           background === "gradient"
             ? "linear-gradient(90deg, #00C6FB 0%, #005BEA 100%)"

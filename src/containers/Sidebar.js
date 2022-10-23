@@ -3,6 +3,7 @@ import HomeIcon from "remixicon-react/Home2LineIcon";
 import ServerIcon from "remixicon-react/ServerLineIcon";
 import UserIcon from "remixicon-react/User3LineIcon";
 import { useNavigate, useLocation } from "react-router-dom";
+import PencilLineIcon from "remixicon-react/PencilRuler2LineIcon";
 // import { Home, Clock, Edit, CheckList } from "../Assets/assets";
 
 export default function SideBar() {
@@ -20,7 +21,9 @@ export default function SideBar() {
       route: "/people",
     },
     {
-      name: "CheckList",
+      name: "App Builder",
+      icon: ({ color }) => <PencilLineIcon color={color} />,
+      route: "/appbuilder", 
       //   icon: <CheckList />,
     },
   ];
@@ -37,7 +40,7 @@ export default function SideBar() {
           }}
           onClick={(e) => {
             setSelected("Home");
-            navigate("/home");
+            navigate("/");
           }}
           className="btn"
         >
