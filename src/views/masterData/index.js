@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomButton from "../../components/button";
 import ServerLineIcon from "remixicon-react/ServerLineIcon";
 import Tabs from "../../components/tabs";
@@ -7,11 +7,23 @@ import MasterDataTable from "./masterDataTable";
 import AddNewModal from "../../components/modals/AddNewModal";
 import ProductIcon from "remixicon-react/AppsLineIcon";
 import LineIcon from "remixicon-react/Building3LineIcon";
+import { createAsset, getAssets } from "./api";
+
 export default function MasterData() {
   const [activeTab, setActiveTab] = useState(0);
   const [newAppModal, setNewAppModal] = useState(false);
-  const [selectedType, setSelectedType] = useState('Line')
-  const tabList = ["Lines","Products"];
+  // const [newAssetForm, setNewAssetForm] = useState({ name: "" });
+  const [selectedType, setSelectedType] = useState("Line");
+  const [appData, setAppData] = useState({ line: [], product: [] });
+  const tabList = ["Lines", "Products"];
+  // useEffect(() => {
+  
+  //   getAssets(`LINE_ASSET`, (data) => setAppData({ ...appData, line: data }));
+  //   getAssets(`PRODUCT_ASSET`, (data) =>
+  //     setAppData({ ...appData, product: data })
+  //   );
+  // }, []);
+
   return (
     <div>
       <CustomButton
@@ -35,31 +47,51 @@ export default function MasterData() {
         </div>
         <div>
           <CustomButton
-            onClick={() => {setNewAppModal(true)}}
+            onClick={() => {
+              setNewAppModal(true);
+            }}
             padding="12px 10px"
             color="#FFFFFF"
             background="gradient"
-            title="Add New Line"
+            title={`Add New ${tabList[activeTab]}`}
             icon={() => <AddIcon color="#ffffff" />}
           />
         </div>
       </div>
-      {
-        tabList[activeTab] === "Lines" ? <MasterDataTable type="Line" /> : <MasterDataTable type="Product" />
-      }
-      {/* <MasterDataTable /> */}
+      {/* {tabList[activeTab] === "Lines" ? (
+        <MasterDataTable apps={appData.line} type="Line" />
+      ) : (
+        <MasterDataTable apps={appData.product} type="Product" />
+      )} */}
+
+      <MasterDataTable type={tabList[activeTab]} />
       <AddNewModal
         header="New Asset Details"
         buttonName="Add Asset"
         show={newAppModal}
         setShow={setNewAppModal}
+        onSubmit={(data) => {
+          console.log(data);
+          createAsset(
+            {
+              name: data.name,
+              type: `${selectedType.toUpperCase()}_ASSET`,
+            },
+            () => {
+              setNewAppModal(false);
+            }
+          );
+        }}
         types={[
           { name: "Line", icon: () => <LineIcon color=" #7D7676" /> },
           { name: "Product", icon: () => <ProductIcon color=" #7D7676" /> },
         ]}
         inputs={[
-          {label:`${selectedType} Name`,},
-          {label:`${selectedType} ID`,},
+          {
+            label: `${selectedType} Name`,
+            value: "name",
+          },
+          { label: `${selectedType} ID`, value: "id" },
         ]}
         selectedType={selectedType}
         setSelectedType={setSelectedType}

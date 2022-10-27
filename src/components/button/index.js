@@ -13,9 +13,11 @@ export default function CustomButton({
   height = "auto",
   borderRadius = "11px",
   margin="0px",
+  type=""
 }) {
   return (
     <button
+      type={type}
       onClick={onClick}
       className="btn"
       style={{

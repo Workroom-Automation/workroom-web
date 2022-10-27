@@ -34,7 +34,7 @@
 }
 .add-user-input:last-child{
     margin-top: 7px;
-    margin-bottom: 22px;
+    /* margin-bottom: 22px; */
 }
 .add-user-input label{
     font-size: 14px;
