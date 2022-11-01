@@ -8,6 +8,11 @@ export default function Tabs({
   style = {},
   className = "",
   tabWidth = "100px",
+  activeTabBg="gradient",
+  color,
+  fontWeight,
+  border="1px solid #DADADA",
+  tabPadding="13px 0"
 }) {
   return (
     <div style={style} className="d-flex">
@@ -15,10 +20,10 @@ export default function Tabs({
         return (
           <CustomButton
             onClick={() => setActiveTab(index)}
-            background={activeTab === index ? "gradient" : "#FFFFFF"}
-            color={activeTab === index ? "#FFFFFF" : "#000000"}
-            fontWeight={activeTab === index ? "700" : "400"}
-            padding="13px 0"
+            background={activeTab === index ? activeTabBg : "#FFFFFF"}
+            color={color?color:activeTab === index ? "#FFFFFF" : "#000000"}
+            fontWeight={fontWeight?fontWeight:activeTab === index ? "700" : "400"}
+            padding={tabPadding}
             width={tabWidth}
             borderRadius={
               index == 0
@@ -28,6 +33,7 @@ export default function Tabs({
                 : "0"
             }
             title={tab}
+            border={border}
           />
         );
       })}

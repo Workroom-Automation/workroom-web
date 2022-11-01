@@ -6,7 +6,7 @@ export default function CustomButton({
   title = "",
   color = "#00000",
   fontSize = "14px",
-  width = "100%",
+  width = "auto",
   fontWeight = "700",
   onClick = () => {},
   border = "none",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AddIcon from "remixicon-react/AddCircleLineIcon";
 import CustomButton from "../../components/button";
 import Tabs from "../../components/tabs";
@@ -17,6 +17,9 @@ export default function People() {
   const [createTeamModal, setCreateTeamModal] = useState(false);
   const [newUserModal, setNewUserModal] = useState(false);
   const [userType, setUserType] = useState("workforce");
+  useEffect(()=>{
+    console.count();
+  })
   return (
     <div>
       <CustomButton
@@ -135,8 +138,8 @@ export default function People() {
         buttonName="Invite User"
         header="New User Details"
         inputs={[
-          {label: "User Email-ID",},
-          {label: "Designation (Optional)", },
+          {label: "User Email-ID", value:"email"},
+          {label: "Designation (Optional)", value:"designation" },
         ]}
       />
 

@@ -1,7 +1,13 @@
 import logo from "./logo.svg";
 import "./App.css";
 import authRoutes from "./routes/authRoutes";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  matchPath,
+} from "react-router-dom";
 import Header from "./containers/Header";
 import Layout from "./containers/Layout";
 import Sidebar from "./containers/Sidebar";
@@ -10,18 +16,41 @@ function Home() {
   return <div>Home</div>;
 }
 
+const checkRouteWithNav = (routeList, currentRoute) => {
+  let isWIthNav = false;
+  routeList.map((route) => {
+    const match = matchPath({ path: route }, currentRoute);
+    if (match) {
+      console.log(route, currentRoute);
+      isWIthNav = true;
+    }
+  });
+  return isWIthNav;
+};
+
 function App() {
   let location = useLocation();
   const currentRoute = location.pathname;
-  const routesWithNavigation = allRoutes.map((route, idx) => {
+  const routesWithTopNavigation = allRoutes.map((route) => {
     return route.path;
   });
-  console.log(routesWithNavigation, currentRoute);
+  const routesWithSideNavigation = allRoutes
+    .filter((route) => {
+      if (route?.withoutNav) {
+      } else {
+        return route.path;
+      }
+    })
+    .map((route) => {
+      return route.path;
+    });
+  console.log(routesWithTopNavigation, currentRoute);
+
   return (
     <>
       <div
         style={{
-          display: routesWithNavigation.includes(currentRoute)
+          display: checkRouteWithNav(routesWithTopNavigation, currentRoute)
             ? "block"
             : "none",
         }}
@@ -30,11 +59,9 @@ function App() {
       </div>
       <div
         style={{
-          display:
-            routesWithNavigation.includes(currentRoute) &&
-            currentRoute != "/"
-              ? "block"
-              : "none",
+          display: checkRouteWithNav(routesWithSideNavigation, currentRoute)
+            ? "block"
+            : "none",
         }}
       >
         <Sidebar />
@@ -59,7 +86,16 @@ function App() {
                 key={idx}
                 path={route.path}
                 name={route.name}
-                element={<Layout type={route.name==="Home"?"home":"with-nav"} component={route.component} />}
+                element={
+                  <Layout
+                    type={
+                      checkRouteWithNav(routesWithSideNavigation, route.path)
+                        ? "with-nav"
+                        : "without-nav"
+                    }
+                    component={route.component}
+                  />
+                }
               />
             )
           );

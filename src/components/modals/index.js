@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, ModalHeader } from "react-bootstrap";
-
+import './style.css'
 export default function CustomModal({
   show = false,
   setShow = () => {},
@@ -28,7 +28,7 @@ export default function CustomModal({
       )}
 
       {Body && (
-        <Modal.Body className="py-0">
+        <Modal.Body style={{borderRadius:"11px"}} className="p-0">
           <Body />
         </Modal.Body>
       )}

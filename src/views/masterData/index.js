@@ -16,6 +16,7 @@ export default function MasterData() {
   const [selectedType, setSelectedType] = useState("Line");
   const [appData, setAppData] = useState({ line: [], product: [] });
   const tabList = ["Lines", "Products"];
+
   // useEffect(() => {
   
   //   getAssets(`LINE_ASSET`, (data) => setAppData({ ...appData, line: data }));
