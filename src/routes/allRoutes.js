@@ -4,12 +4,13 @@ import Home from ".././views/home";
 import People from "../views/people";
 import AppBuilder from "../views/appBuilder";
 import AuthorSheet from "../views/appBuilder/authorSheet";
+import Sheets from "../features/sheets/ui/sheets";
 const allRoutes = [
   {
     path: "/",
     name: "Home",
     component: Home,
-    withoutNav:true,
+    withoutNav: true,
   },
   {
     path: "/masterData",
@@ -30,6 +31,12 @@ const allRoutes = [
     path: "/appbuilder/authorsheet/:id",
     name: "Author Sheet",
     component: AuthorSheet,
+    withoutNav: true,
+  },
+  {
+    path: "/appbuilder/authorsheet/sheets",
+    name: "Sheets",
+    component: Sheets,
     withoutNav: true,
   },
 ];

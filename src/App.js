@@ -21,7 +21,6 @@ const checkRouteWithNav = (routeList, currentRoute) => {
   routeList.map((route) => {
     const match = matchPath({ path: route }, currentRoute);
     if (match) {
-      console.log(route, currentRoute);
       isWIthNav = true;
     }
   });
@@ -44,7 +43,6 @@ function App() {
     .map((route) => {
       return route.path;
     });
-  console.log(routesWithTopNavigation, currentRoute);
 
   return (
     <>

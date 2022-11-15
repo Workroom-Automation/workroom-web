@@ -83,9 +83,9 @@ export default function AddNewModal({
   header = "Add New",
 }) {
   const { register, handleSubmit, errors, reset } = useForm();
-  useEffect(()=>{
+  useEffect(() => {
     reset();
-  },[show])
+  }, [show]);
   return (
     <div>
       <CustomModal
