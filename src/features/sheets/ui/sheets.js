@@ -14,6 +14,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 export default function Sheets() {
   const tabList = ["Authoring", "Preview"];
   const [activeTab, setActiveTab] = useState(0);
+  const [formObject, setFormObject] = useState([]);
   const fieldTypes = Object.keys(fields);
 
   return (
@@ -104,7 +105,7 @@ export default function Sheets() {
               <LayoutTopIcon color="#7D7676" />
               <b style={{ marginLeft: "9px" }}> Canvas</b>
             </div>
-            <Canvas />
+            <Canvas value={{ setFormObject, formObject }} />
           </div>
           {
             //  <div style={{ borderLeft: "1px solid #DADADA" }} className="col-2">
