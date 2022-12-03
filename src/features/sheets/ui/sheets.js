@@ -6,15 +6,16 @@ import Tabs from "../../../components/tabs";
 import PencilLineIcon from "remixicon-react/PencilRuler2LineIcon";
 import LayoutTopIcon from "remixicon-react/LayoutTopLineIcon";
 import FlashLightIcon from "remixicon-react/FlashlightLineIcon";
-import Canvas from "../components/canvas.js";
+import Canvas from "../components/canvas/ui/canvas.js";
 import Field from "../components/field.js";
-import { fields } from "../models/fields.js";
+import { fields } from "../data/models/fields.js";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+
 export default function Sheets() {
   const tabList = ["Authoring", "Preview"];
   const [activeTab, setActiveTab] = useState(0);
-  const [formObject, setFormObject] = useState([]);
+  const [sheet, setSheet] = useState([]);
   const fieldTypes = Object.keys(fields);
 
   return (
@@ -34,6 +35,9 @@ export default function Sheets() {
             title="T 1: Pre-Delivery Inspection"
             icon={() => <BillLineIcon color="#000000" />}
           />
+          <button type="button" onClick={() => console.log(sheet)}>
+            dlkfj
+          </button>
         </div>
         <div className="d-flex">
           <Tabs
@@ -105,19 +109,8 @@ export default function Sheets() {
               <LayoutTopIcon color="#7D7676" />
               <b style={{ marginLeft: "9px" }}> Canvas</b>
             </div>
-            <Canvas value={{ setFormObject, formObject }} />
+            <Canvas value={{ sheet, setSheet }} />
           </div>
-          {
-            //  <div style={{ borderLeft: "1px solid #DADADA" }} className="col-2">
-            //   <div
-            //     style={{ borderBottom: "1px solid #DADADA", padding: "15px 0" }}
-            //     className="d-flex justify-content-center"
-            //   >
-            //     <FlashLightIcon color="#7D7676" />
-            //     <b style={{ marginLeft: "9px" }}> Controls</b>
-            //   </div>
-            // </div>
-          }
         </div>
       </DndProvider>
     </div>

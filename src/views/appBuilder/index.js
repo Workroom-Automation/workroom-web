@@ -55,7 +55,6 @@ export default function AppBuilder() {
       };
     },
     option: (provided, state) => {
-      console.log(state, "states");
       return {
         ...provided,
         backgroundColor: state.isFocused ? "#D0EBFF" : "white",
@@ -108,7 +107,9 @@ export default function AppBuilder() {
           />
         </div>
         <CustomButton
-          onClick={() => setAuthorSheetModal(true)}
+          onClick={() => {
+            navigate("/appbuilder/authorsheet/sheets");
+          }}
           icon={() => <AddCircleLineIcon color="#ffffff" />}
           color="#ffffff"
           width="172px"
@@ -238,7 +239,9 @@ export default function AppBuilder() {
                 >
                   <div className="col-3">
                     <CustomButton
-                      onClick={()=>{navigate('/appbuilder/authorsheet/2')}}
+                      onClick={() => {
+                        navigate("/appbuilder/authorsheet/2");
+                      }}
                       padding="10px 15px"
                       color="#ffffff"
                       background="gradient"

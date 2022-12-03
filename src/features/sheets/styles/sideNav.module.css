@@ -1,0 +1,25 @@
+#sideNav {
+  width: 500px;
+  height: 92vh;
+  margin-top: 92px;
+  overflow: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+#sectorNo {
+  background: #009aff;
+  min-width: 100px;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  padding: 0px 10px 0px 10px;
+  font-size: 15px;
+}
+#collapseButton {
+  border: 1px solid #dadada;
+  background: #d0ebff;
+  color: black;
+  width: 100%;
+  text-align: left;
+  height: 58px;
+}

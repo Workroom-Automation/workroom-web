@@ -19,47 +19,70 @@ import SectionIcon from "remixicon-react/LayoutRowLineIcon";
 export const fields = {
   ["Basic Fields"]: [
     {
+      id: "",
       name: "Text",
       icon: <TextIcon color="#7D7676" />,
     },
-    { name: "Number", icon: <HashTagIcon color="#7D7676" /> },
+    {
+      id: "",
+      name: "Number",
+      icon: <HashTagIcon color="#7D7676" />,
+    },
   ],
   ["Selection Fields"]: [
     {
+      id: "",
       name: "Checklist",
       icon: <ChecklistIcon color="#7D7676" />,
     },
     {
+      id: "SELECTION",
       name: "Single Selection",
       icon: <SingleCheckIcon color="#7D7676" />,
     },
     {
+      id: "Multi-Selection",
       name: "Multi-Selection",
       icon: <DoubleCheckIcon color="#7D7676" />,
     },
     {
+      id: "",
       name: "Select Date & Time",
       icon: <CalenderIcon color="#7D7676" />,
     },
     {
+      id: "",
       name: "User Selection",
       icon: <UserIcon color="#7D7676" />,
     },
     {
+      id: "",
       name: "Multi-User Selection",
       icon: <UserGroupIcon color="#7D7676" />,
     },
   ],
   ["Attachment Fields"]: [
-    { name: "Upload Photo/Video", icon: <ImageAddIcon color="#7D7676" /> },
     {
+      id: "",
+      name: "Upload Photo/Video",
+      icon: <ImageAddIcon color="#7D7676" />,
+    },
+    {
+      id: "",
       name: "Upload File",
       icon: <FileAddIcon color="#7D7676" />,
     },
     {
+      id: "",
       name: "Add Link",
       icon: <AddLinkIcon color="#7D7676" />,
     },
   ],
-  ["Layout"]: [{ name: "Section", icon: <SectionIcon color="#7D7676" /> }],
+  ["Layout"]: [
+    {
+      id: "",
+      name: "Section",
+      icon: <SectionIcon color="#7D7676" />,
+    },
+  ],
 };

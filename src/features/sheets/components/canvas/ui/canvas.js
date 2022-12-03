@@ -1,19 +1,26 @@
 import { useDrop } from "react-dnd";
-import styles from "../styles/canvas.module.css";
+import styles from "../../../styles/canvas.module.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { dragDropCanvas } from "../../../common/assets/images/dragDropCanvas.js";
-import Section from "./section.js";
+import { dragDropCanvas } from "../../../../../common/assets/images/dragDropCanvas.js";
+import Section from "../../section/ui/section.js";
+import { useState, useEffect, useReducer } from "react";
+import { CanvasReducers } from "./state/canvasReducers.js";
+import { canvasActionType } from "../data/models/canvasActionType.js";
+
 export default function Canvas(props) {
+  const [sections, dispatch] = useReducer(CanvasReducers, []);
+
+  useEffect(() => {
+    props.value.setSheet(sections);
+  }, [sections]);
+
   const [collectedProps, drop] = useDrop(() => ({
     accept: "field",
     drop: (item, monitor) => {
       if (item.name == "Section") {
-        // let a = {};
-        // a[`section${props.value.formObject.length + 1}`] = [];
-        props.value.formObject.push([]);
-        props.value.setFormObject(props.value.formObject);
+        dispatch({ type: canvasActionType.addSection });
       }
     },
     collect: (monitor) => ({
@@ -25,14 +32,14 @@ export default function Canvas(props) {
     <div
       id={styles.canvas}
       ref={drop}
-      data-testid="dustbin"
+      data-testid="canvas"
       style={{
         opacity: collectedProps.isOver && collectedProps.canDrop ? 0.5 : 1,
       }}
     >
-      {props.value.formObject.length != 0 ? (
+      {sections.length != 0 ? (
         <>
-          {props.value.formObject.map((item, index) => {
+          {sections.map((item, index) => {
             return (
               <div key={`${index}-${item.name}`} id={styles.sector}>
                 <div id={styles.header}>
@@ -45,12 +52,16 @@ export default function Canvas(props) {
                 <div id={styles.body}>
                   <Section
                     value={{
-                      onFileDrop: (field) => {
-                        item.push(field);
-                        props.value.formObject[index] = item;
-                        props.value.setFormObject(props.value.formObject);
+                      onFieldDrop: (fields) => {
+                        dispatch({
+                          type: canvasActionType.addFieldsToSection,
+                          data: {
+                            index: index,
+                            fields: fields,
+                          },
+                        });
                       },
-                      fields: item,
+                      sectionIndex: index,
                     }}
                   />
                 </div>

@@ -3,6 +3,8 @@
   border: 1px solid #a49f9f;
   margin-bottom: 20px;
   padding: 5px;
+  background: white;
+  cursor: pointer;
 }
 #image {
   text-align: center;
