@@ -7,7 +7,7 @@ import { useState, useEffect, useReducer } from "react";
 import { SectionReducers } from "./state/sectionReducers.js";
 import { sectionActionType } from "../data/models/sectionActionType.js";
 import { fieldList } from "../../../data/models/fieldList.js";
-import SideNav from "../../sideNav.js";
+import SideNav from "../../sideNav/ui/sideNav.js";
 
 export default function Section(props) {
   const [show, setShow] = useState(false);
@@ -23,9 +23,9 @@ export default function Section(props) {
     accept: "field",
     drop: (item, monitor) => {
       if (item.name != "Section") {
+        setSelectedField({ icon: item });
         dispatch({ type: sectionActionType.addField, data: item });
         setShow(true);
-        setSelectedField(item);
       }
     },
     collect: (monitor) => ({
@@ -41,16 +41,28 @@ export default function Section(props) {
         opacity: collectedProps.isOver && collectedProps.canDrop ? 0.5 : 1,
       }}
     >
-      <SideNav
-        value={{
-          onToggle: (show) => {
-            setShow(show);
-          },
-          show,
-          selectedField,
-          sectionNumber: props.value.sectionNumber,
-        }}
-      />
+      {show ? (
+        <SideNav
+          value={{
+            onToggle: (show) => {
+              setShow(show);
+            },
+            show,
+            selectedField,
+            sectionNumber: props.value.sectionIndex + 1,
+            onSave: (properties, index) => {
+              dispatch({
+                type: sectionActionType.addPropertiesToField,
+                data: {
+                  index: index ? index : fields.length - 1,
+                  properties: properties,
+                },
+              });
+            },
+          }}
+        />
+      ) : null}
+
       <Container>
         <Row style={{ marginTop: "20px" }}>
           {fields.length != 0 ? (
@@ -62,8 +74,12 @@ export default function Section(props) {
                     <div
                       id={styles.field}
                       onClick={() => {
-                        // setShow(true);
-                        // setSelectedField(item);
+                        setShow(true);
+                        setSelectedField({
+                          icon: obj,
+                          field: item,
+                          index: index,
+                        });
                       }}
                     >
                       <span
@@ -72,8 +88,9 @@ export default function Section(props) {
                           paddingRight: "10px",
                         }}
                       >
-                        {obj?.icon}
+                        {obj.icon}
                       </span>
+                      {item.properties?.name}
                     </div>
                   </Col>
                 );

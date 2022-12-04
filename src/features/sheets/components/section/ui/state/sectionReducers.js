@@ -8,6 +8,9 @@ export const SectionReducers = (state, action) => {
       };
       initialState.properties["type"] = action.data.id;
       return [...state, initialState];
+    case sectionActionType.addPropertiesToField:
+      state[action.data.index]["properties"] = action.data.properties;
+      return state;
     default:
       return state;
   }

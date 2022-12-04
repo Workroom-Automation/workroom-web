@@ -19,12 +19,12 @@ import SectionIcon from "remixicon-react/LayoutRowLineIcon";
 export const fields = {
   ["Basic Fields"]: [
     {
-      id: "",
+      id: "TEXT",
       name: "Text",
       icon: <TextIcon color="#7D7676" />,
     },
     {
-      id: "",
+      id: "NUMBER",
       name: "Number",
       icon: <HashTagIcon color="#7D7676" />,
     },
@@ -41,12 +41,12 @@ export const fields = {
       icon: <SingleCheckIcon color="#7D7676" />,
     },
     {
-      id: "Multi-Selection",
+      id: "MULTI_SELECTION",
       name: "Multi-Selection",
       icon: <DoubleCheckIcon color="#7D7676" />,
     },
     {
-      id: "",
+      id: "DATE_SELECTION",
       name: "Select Date & Time",
       icon: <CalenderIcon color="#7D7676" />,
     },
