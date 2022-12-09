@@ -1,5 +1,5 @@
 export const sectionActionType = {
   addField: "AddField",
-  addPropertiesToField: "AddPropertiesToField",
+  addFieldInfoToField: "AddFieldInfoToField",
   removeField: "RemoveField",
 };

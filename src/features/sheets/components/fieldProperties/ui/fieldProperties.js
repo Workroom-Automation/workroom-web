@@ -7,8 +7,6 @@ import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import SingleCheckIcon from "remixicon-react/CheckLineIcon";
 
 export default function FieldProperties(props) {
-  const [openCollapse1, setOpenCollapse1] = useState(false);
-  const [fieldOption, setFieldOption] = useState("");
   return (
     <div id={styles.fieldProperties}>
       <p
@@ -28,17 +26,12 @@ export default function FieldProperties(props) {
               <InputGroup.Text>{index + 1}.</InputGroup.Text>
               <Form.Control
                 defaultValue={item}
-                onChange={(e) => setFieldOption(e.target.value)}
+                onChange={(e) => {
+                  props.value.onEditProperty(index, e.target.value);
+                }}
                 placeholder="Enter Property"
                 aria-label="Field Name"
               />
-              <InputGroup.Text>
-                <SingleCheckIcon
-                  onClick={() => props.value.onEditProperty(index, fieldOption)}
-                  color="#7D7676"
-                  style={{ cursor: "pointer" }}
-                />
-              </InputGroup.Text>
               <InputGroup.Text>
                 <IndeterminateCircleLineIcon
                   onClick={() => props.value.onRemoveProperty(item)}

@@ -1,15 +1,14 @@
 import styles from "../../../styles/triggers.module.css";
 import { useState, useEffect } from "react";
 import AddCircleLineIcon from "remixicon-react/AddCircleLineIcon";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Collapse from "react-bootstrap/Collapse";
+import { Button, Form, Collapse, Row, Col } from "react-bootstrap";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
+import DeleteBin6LineIcon from "remixicon-react/DeleteBin6LineIcon";
 import axios from "axios";
-import { triggerConditionType } from "../data/models/triggerConditionType.js";
+import TriggerConditions from "../../triggerConditions.js";
 
 export default function Triggers(props) {
-  const [openCollapse1, setOpenCollapse1] = useState(false);
+  const [openCollapse, setOpenCollapse] = useState(false);
   const [conditionList, setConditionList] = useState([]);
 
   useEffect(() => {
@@ -42,39 +41,93 @@ export default function Triggers(props) {
       <br />
       {props.value.triggers?.map((item, index) => {
         return (
-          <>
+          <div key={`${index}-${item}`}>
             <Button
               id={styles.collapseButton}
-              onClick={() => setOpenCollapse1(!openCollapse1)}
               aria-controls="example-collapse-text"
-              aria-expanded={openCollapse1}
+              aria-expanded={openCollapse}
             >
-              <span style={{ marginLeft: "10px", fontWeight: "bold" }}>
+              <span
+                onClick={() => setOpenCollapse(!openCollapse)}
+                style={{
+                  marginLeft: "10px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+              >
                 Trigger {index + 1}
               </span>
               <ArrowDownSLineIcon
+                onClick={() => setOpenCollapse(!openCollapse)}
                 color="#7D7676"
-                style={{ float: "right", marginTop: "3px" }}
+                style={{ float: "right", marginTop: "3px", cursor: "pointer" }}
+              />
+              <DeleteBin6LineIcon
+                onClick={() => props.value.onRemoveTrigger(index)}
+                color="#ED0000"
+                style={{
+                  height: "20px",
+                  width: "20px",
+                  float: "right",
+                  marginTop: "3px",
+                  marginRight: "3px",
+                  cursor: "pointer",
+                }}
               />
             </Button>
-            <Collapse in={openCollapse1}>
+            <Collapse in={openCollapse}>
               <div id={styles.triggerBody}>
                 <b style={{ fontSize: "14px" }}>Condition</b>
                 <Form>
                   <Form.Label>When the value entered</Form.Label>
 
                   <Form.Group className="mb-3">
-                    <Form.Select>
+                    <Form.Select
+                      value={item.condition_type}
+                      onChange={(e) => {
+                        item.condition_type = e.target.value;
+                        props.value.onEditTrigger(index, item);
+                      }}
+                    >
                       <option value="">Select Condition</option>
-                      {conditionList.map((item, index) => {
-                        let field = triggerConditionType[item];
+                      {conditionList.map((value, index) => {
                         return (
-                          <option value={item} key={`${index}-${item}`}>
-                            {field.name}
+                          <option value={value} key={`${index}-${value}`}>
+                            {
+                              TriggerConditions(
+                                value,
+                                item,
+                                props.value.fieldType.id,
+                                (selectedValue) => {}
+                              ).name
+                            }
                           </option>
                         );
                       })}
                     </Form.Select>
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Row>
+                      {
+                        TriggerConditions(
+                          item?.condition_type,
+                          item,
+                          props.value.fieldType.id,
+                          (selectedValue) => {
+                            if (selectedValue.lower_limit) {
+                              item.condition["lower_limit"] =
+                                selectedValue.lower_limit;
+                            } else if (selectedValue.upper_limit) {
+                              item.condition["upper_limit"] =
+                                selectedValue.upper_limit;
+                            } else {
+                              item.condition = selectedValue;
+                            }
+                            props.value.onEditTrigger(index, item);
+                          }
+                        )?.fields
+                      }
+                    </Row>
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>
@@ -96,7 +149,7 @@ export default function Triggers(props) {
                 </Form>
               </div>
             </Collapse>
-          </>
+          </div>
         );
       })}
     </div>

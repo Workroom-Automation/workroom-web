@@ -36,7 +36,7 @@ export default function Sheets() {
             icon={() => <BillLineIcon color="#000000" />}
           />
           <button type="button" onClick={() => console.log(sheet)}>
-            dlkfj
+            Finish Authoring
           </button>
         </div>
         <div className="d-flex">

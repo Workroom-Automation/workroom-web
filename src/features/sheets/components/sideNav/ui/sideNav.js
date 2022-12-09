@@ -21,9 +21,7 @@ import { triggersActionType } from "../../triggers/data/models/triggersActionTyp
 
 export default function SideNav(props) {
   let field = props.value.selectedField?.field;
-  const [fieldName, setFieldName] = useState(
-    props.value.selectedField?.field?.properties?.name
-  );
+  const [fieldName, setFieldName] = useState(field?.properties?.name);
   const [fieldDescription, setFieldDescription] = useState(
     field?.properties?.description
   );
@@ -33,7 +31,10 @@ export default function SideNav(props) {
       ? field?.properties?.field_form_data?.options
       : []
   );
-  const [triggers, dispatchTriggers] = useReducer(TriggersReducers, []);
+  const [triggers, dispatchTriggers] = useReducer(
+    TriggersReducers,
+    field?.triggers ? field?.triggers : []
+  );
 
   const [properties, dispatchProperties] = useReducer(SideNavReducers, {});
   const [openCollapse1, setOpenCollapse1] = useState(false);
@@ -41,22 +42,25 @@ export default function SideNav(props) {
   const [openCollapse3, setOpenCollapse3] = useState(false);
 
   const saveChanges = () => {
-    let properties = {
-      type: props.value.selectedField?.icon.id,
-      name: fieldName,
-      description: fieldDescription,
-      field_form_data: {
-        options: fieldProperties,
+    let fieldInfo = {
+      properties: {
+        type: props.value.selectedField?.icon.id,
+        name: fieldName,
+        description: fieldDescription,
+        field_form_data: {
+          options: fieldProperties,
+        },
       },
+      triggers: triggers,
     };
-    props.value.onSave(properties, props.value.selectedField?.index);
+    props.value.onSave(fieldInfo, props.value.selectedField.index);
     props.value.onToggle(false);
   };
   return (
     <Offcanvas
       id={styles.sideNav}
       show={props.value.show}
-      onHide={() => props.value.onToggle(false)}
+      onHide={saveChanges}
       placement="end"
       // scroll={true}
       // backdrop={false}
@@ -67,13 +71,6 @@ export default function SideNav(props) {
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
-        <Button
-          style={{ float: "right", marginBottom: "10px" }}
-          type="button"
-          onClick={saveChanges}
-        >
-          Save and Close
-        </Button>
         <Form>
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">
@@ -205,6 +202,18 @@ export default function SideNav(props) {
                       onAddTrigger: () => {
                         dispatchTriggers({
                           type: triggersActionType.addTriggers,
+                        });
+                      },
+                      onRemoveTrigger: (index) => {
+                        dispatchTriggers({
+                          type: triggersActionType.removeTriggers,
+                          data: index,
+                        });
+                      },
+                      onEditTrigger: (index, trigger) => {
+                        dispatchTriggers({
+                          type: triggersActionType.editTriggers,
+                          data: { index: index, trigger: trigger },
                         });
                       },
                     }}

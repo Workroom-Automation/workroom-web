@@ -50,12 +50,12 @@ export default function Section(props) {
             show,
             selectedField,
             sectionNumber: props.value.sectionIndex + 1,
-            onSave: (properties, index) => {
+            onSave: (fieldInfo, index) => {
               dispatch({
-                type: sectionActionType.addPropertiesToField,
+                type: sectionActionType.addFieldInfoToField,
                 data: {
-                  index: index ? index : fields.length - 1,
-                  properties: properties,
+                  index: index != undefined ? index : fields.length - 1,
+                  fieldInfo: fieldInfo,
                 },
               });
             },
@@ -90,7 +90,14 @@ export default function Section(props) {
                       >
                         {obj.icon}
                       </span>
-                      {item.properties?.name}
+                      <span
+                        style={{
+                          marginLeft: "10px",
+                          fontSize: "16px",
+                        }}
+                      >
+                        {item.properties?.name}
+                      </span>
                     </div>
                   </Col>
                 );

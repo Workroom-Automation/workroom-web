@@ -5,11 +5,12 @@ export const SectionReducers = (state, action) => {
     case sectionActionType.addField:
       let initialState = {
         properties: {},
+        triggers: [],
       };
       initialState.properties["type"] = action.data.id;
       return [...state, initialState];
-    case sectionActionType.addPropertiesToField:
-      state[action.data.index]["properties"] = action.data.properties;
+    case sectionActionType.addFieldInfoToField:
+      state[action.data.index] = action.data.fieldInfo;
       return state;
     default:
       return state;
