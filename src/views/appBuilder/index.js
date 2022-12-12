@@ -154,7 +154,7 @@ export default function AppBuilder() {
           ]}
         />
         <CustomModal
-          show={authorSheetModal}
+          show={true}
           setShow={setAuthorSheetModal}
           // size="md"
           body={() => {

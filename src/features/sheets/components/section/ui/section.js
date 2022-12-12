@@ -96,7 +96,7 @@ export default function Section(props) {
                           fontSize: "16px",
                         }}
                       >
-                        {item.properties?.name}
+                        {item.properties?.title}
                       </span>
                     </div>
                   </Col>

@@ -21,7 +21,7 @@ import { triggersActionType } from "../../triggers/data/models/triggersActionTyp
 
 export default function SideNav(props) {
   let field = props.value.selectedField?.field;
-  const [fieldName, setFieldName] = useState(field?.properties?.name);
+  const [fieldName, setFieldName] = useState(field?.properties?.title);
   const [fieldDescription, setFieldDescription] = useState(
     field?.properties?.description
   );
@@ -45,7 +45,7 @@ export default function SideNav(props) {
     let fieldInfo = {
       properties: {
         type: props.value.selectedField?.icon.id,
-        name: fieldName,
+        title: fieldName,
         description: fieldDescription,
         field_form_data: {
           options: fieldProperties,
@@ -204,10 +204,10 @@ export default function SideNav(props) {
                           type: triggersActionType.addTriggers,
                         });
                       },
-                      onRemoveTrigger: (index) => {
+                      onRemoveTrigger: (trigger) => {
                         dispatchTriggers({
                           type: triggersActionType.removeTriggers,
-                          data: index,
+                          data: trigger,
                         });
                       },
                       onEditTrigger: (index, trigger) => {

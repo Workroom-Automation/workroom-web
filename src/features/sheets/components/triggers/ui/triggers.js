@@ -63,7 +63,7 @@ export default function Triggers(props) {
                 style={{ float: "right", marginTop: "3px", cursor: "pointer" }}
               />
               <DeleteBin6LineIcon
-                onClick={() => props.value.onRemoveTrigger(index)}
+                onClick={() => props.value.onRemoveTrigger(item)}
                 color="#ED0000"
                 style={{
                   height: "20px",
@@ -133,7 +133,13 @@ export default function Triggers(props) {
                     <Form.Label>
                       <b style={{ fontSize: "14px" }}>Action</b>
                     </Form.Label>
-                    <Form.Select>
+                    <Form.Select
+                      value={item.action_type}
+                      onChange={(e) => {
+                        item.action_type = e.target.value;
+                        props.value.onEditTrigger(index, item);
+                      }}
+                    >
                       <option value="">Select Action</option>
                       <option value="SEND_MAIL">Send Mail</option>
                     </Form.Select>
@@ -144,7 +150,15 @@ export default function Triggers(props) {
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Message</Form.Label>
-                    <Form.Control as="textarea" rows={2} />
+                    <Form.Control
+                      onChange={(e) => {
+                        item.action.body = e.target.value;
+                        props.value.onEditTrigger(index, item);
+                      }}
+                      defaultValue={item.action.body}
+                      as="textarea"
+                      rows={2}
+                    />
                   </Form.Group>
                 </Form>
               </div>

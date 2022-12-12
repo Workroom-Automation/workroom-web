@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import CustomButton from "../../../components/button";
 import LeftArrowIcon from "remixicon-react/ArrowLeftSLineIcon";
 import BillLineIcon from "remixicon-react/BillLineIcon";
@@ -11,15 +11,57 @@ import Field from "../components/field.js";
 import { fields } from "../data/models/fields.js";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import NewSheetDetailsModal from "../components/newSheetDetailsModal/ui/newSheetDetailsModal.js";
+import { apiClientType } from "../../../clients/data/models/apiClientType.js";
+import { ApiClient } from "../../../clients/apiClient.js";
+import { SheetReducers } from "./state/sheetReducers.js";
+import { sheetActionType } from "../data/models/sheetActionType.js";
 
 export default function Sheets() {
   const tabList = ["Authoring", "Preview"];
   const [activeTab, setActiveTab] = useState(0);
-  const [sheet, setSheet] = useState([]);
+  const [sheet, dispatch] = useReducer(SheetReducers, {});
+  const [sheetId, setSheetId] = useState();
   const fieldTypes = Object.keys(fields);
+  const [showModal, setShowModal] = useState(true);
 
+  const onFinishAuthoring = async () => {
+    if (sheetId) {
+      let response = await ApiClient(
+        apiClientType.patch,
+        process.env.REACT_APP_BASE_URL,
+        `/sheet`,
+        sheet
+      );
+      if (response) {
+        console.log(response);
+        setSheetId(response.id);
+      }
+    } else {
+      let response = await ApiClient(
+        apiClientType.post,
+        process.env.REACT_APP_BASE_URL,
+        `/sheet`,
+        sheet
+      );
+      if (response) {
+        console.log(response);
+        setSheetId(response.id);
+      }
+    }
+  };
   return (
     <div style={{ padding: "22px 42px" }}>
+      <NewSheetDetailsModal
+        show={showModal}
+        value={{
+          sheet,
+          onSubmitModal: (params) => {
+            dispatch({ type: sheetActionType.addSheetDetails, data: params });
+            setShowModal(false);
+          },
+        }}
+      />
       <div className="d-flex justify-content-between">
         <div>
           <CustomButton
@@ -29,13 +71,14 @@ export default function Sheets() {
             icon={() => <LeftArrowIcon color="#7D7676" />}
           />
           <CustomButton
+            onClick={() => setShowModal(true)}
             height="50px"
             padding="0 30px"
             background=" rgba(208, 235, 255, 0.35)"
             title="T 1: Pre-Delivery Inspection"
             icon={() => <BillLineIcon color="#000000" />}
           />
-          <button type="button" onClick={() => console.log(sheet)}>
+          <button type="button" onClick={onFinishAuthoring}>
             Finish Authoring
           </button>
         </div>
@@ -109,7 +152,16 @@ export default function Sheets() {
               <LayoutTopIcon color="#7D7676" />
               <b style={{ marginLeft: "9px" }}> Canvas</b>
             </div>
-            <Canvas value={{ sheet, setSheet }} />
+            <Canvas
+              value={{
+                onSectionDrop: (sections) => {
+                  dispatch({
+                    type: sheetActionType.addSectionsToSheet,
+                    data: sections,
+                  });
+                },
+              }}
+            />
           </div>
         </div>
       </DndProvider>

@@ -16,8 +16,13 @@ export const TriggersReducers = (state, action) => {
       };
       return [...state, initialState];
     case triggersActionType.removeTriggers:
-      state.splice(action.data, 1);
-      return [...state];
+      let arr = [];
+      state.filter((item, index) => {
+        if (item != action.data) {
+          arr.push(item);
+        }
+      });
+      return arr;
     case triggersActionType.editTriggers:
       state[action.data.index] = action.data.trigger;
       return [...state];
