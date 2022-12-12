@@ -59,6 +59,13 @@ export default function Section(props) {
                 },
               });
             },
+            onRemove: (field) => {
+              dispatch({
+                type: sectionActionType.removeField,
+                data: field != undefined ? field : fields[fields.length - 1],
+              });
+              setShow(false);
+            },
           }}
         />
       ) : null}
@@ -71,6 +78,7 @@ export default function Section(props) {
                 let obj = fieldList.find((i) => i.id === item.properties.type);
                 return (
                   <Col key={`${item.properties.type}-${index}`} md={4}>
+                    <span>{index + 1}.</span>
                     <div
                       id={styles.field}
                       onClick={() => {

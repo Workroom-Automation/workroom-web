@@ -19,3 +19,10 @@
   text-align: left;
   height: 48px;
 }
+#multiSelect {
+  background: white;
+}
+#multiSelect span {
+  background: grey;
+  border-radius: 100px;
+}

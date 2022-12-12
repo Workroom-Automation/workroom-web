@@ -18,10 +18,20 @@ import { FieldPropertiesReducers } from "../../fieldProperties/ui/state/fieldPro
 import { TriggersReducers } from "../../triggers/ui/state/triggersReducers.js";
 import { fieldPropertiesActionType } from "../../fieldProperties/data/models/fieldPropertiesActionType.js";
 import { triggersActionType } from "../../triggers/data/models/triggersActionType.js";
+import ToolTip from "../../toolTip.js";
 
 export default function SideNav(props) {
   let field = props.value.selectedField?.field;
   const [fieldName, setFieldName] = useState(field?.properties?.title);
+  const [isMandatory, setIsMandatory] = useState(
+    field?.properties?.is_required
+  );
+  const [isObservation, setIsObservation] = useState(
+    field?.properties?.require_observation
+  );
+  const [isAttachment, setIsAttachment] = useState(
+    field?.properties?.has_attachment
+  );
   const [fieldDescription, setFieldDescription] = useState(
     field?.properties?.description
   );
@@ -50,6 +60,9 @@ export default function SideNav(props) {
         field_form_data: {
           options: fieldProperties,
         },
+        require_observation: isObservation,
+        is_required: isMandatory,
+        has_attachment: isAttachment,
       },
       triggers: triggers,
     };
@@ -65,13 +78,18 @@ export default function SideNav(props) {
       // scroll={true}
       // backdrop={false}
     >
-      <Offcanvas.Header closeButton>
+      <Offcanvas.Header>
         <Offcanvas.Title>
           <div id={styles.sectorNo}>Sector - {props.value.sectionNumber}</div>
         </Offcanvas.Title>
+        <ToolTip
+          value={{
+            onDelete: () => props.value.onRemove(field),
+          }}
+        />
       </Offcanvas.Header>
       <Offcanvas.Body>
-        <Form>
+        <Form onSubmit={(e) => e.preventDefault()}>
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">
               {props.value.selectedField?.icon.icon}
@@ -128,6 +146,18 @@ export default function SideNav(props) {
                   <FieldProperties
                     value={{
                       fieldProperties,
+                      isMandatory,
+                      isObservation,
+                      isAttachment,
+                      setIsMandatory: (value) => {
+                        setIsMandatory(value);
+                      },
+                      setIsObservation: (value) => {
+                        setIsObservation(value);
+                      },
+                      setIsAttachment: (value) => {
+                        setIsAttachment(value);
+                      },
                       onAddProperty: () => {
                         dispatchFieldProperties({
                           type: fieldPropertiesActionType.addFieldProperties,
@@ -198,6 +228,7 @@ export default function SideNav(props) {
                   <Triggers
                     value={{
                       triggers,
+                      fieldProperties,
                       fieldType: props.value.selectedField?.icon,
                       onAddTrigger: () => {
                         dispatchTriggers({

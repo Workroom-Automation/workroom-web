@@ -9,6 +9,15 @@ export const CanvasReducers = (state, action) => {
         fields: [],
       };
       return [...state, initialState];
+    case canvasActionType.removeSection:
+      console.log(action.data);
+      let arr = [];
+      state.filter((item, index) => {
+        if (item != action.data) {
+          arr.push(item);
+        }
+      });
+      return [...arr];
     case canvasActionType.editSectionName:
       state[action.data.index].name = action.data.name;
       return state;
@@ -16,7 +25,6 @@ export const CanvasReducers = (state, action) => {
       state[action.data.index].description = action.data.description;
       return state;
     case canvasActionType.addFieldsToSection:
-      let arr = state;
       state[action.data.index].fields = action.data.fields;
       return state;
     default:

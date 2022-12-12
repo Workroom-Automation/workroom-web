@@ -6,6 +6,8 @@ import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import DeleteBin6LineIcon from "remixicon-react/DeleteBin6LineIcon";
 import axios from "axios";
 import TriggerConditions from "../../triggerConditions.js";
+import { apiClientType } from "../../../../../clients/data/models/apiClientType.js";
+import { ApiClient } from "../../../../../clients/apiClient.js";
 
 export default function Triggers(props) {
   const [openCollapse, setOpenCollapse] = useState(false);
@@ -13,10 +15,14 @@ export default function Triggers(props) {
 
   useEffect(() => {
     (async () => {
-      let result = await axios("http://localhost:8003/api/v1/sheet/canvas");
-      result = await result.data;
+      let response = await ApiClient(
+        apiClientType.get,
+        process.env.REACT_APP_BASE_URL,
+        `/sheet/canvas`,
+        {}
+      );
       setConditionList(
-        result.field_resources[props.value.fieldType.id].trigger_conditions
+        response.field_resources[props.value.fieldType.id].trigger_conditions
       );
     })();
   }, []);
@@ -43,6 +49,7 @@ export default function Triggers(props) {
         return (
           <div key={`${index}-${item}`}>
             <Button
+              type="button"
               id={styles.collapseButton}
               aria-controls="example-collapse-text"
               aria-expanded={openCollapse}
@@ -98,6 +105,7 @@ export default function Triggers(props) {
                                 value,
                                 item,
                                 props.value.fieldType.id,
+                                props.value.fieldProperties,
                                 (selectedValue) => {}
                               ).name
                             }
@@ -113,7 +121,9 @@ export default function Triggers(props) {
                           item?.condition_type,
                           item,
                           props.value.fieldType.id,
+                          props.value.fieldProperties,
                           (selectedValue) => {
+                            console.log(selectedValue);
                             if (selectedValue.lower_limit) {
                               item.condition["lower_limit"] =
                                 selectedValue.lower_limit;
@@ -146,7 +156,15 @@ export default function Triggers(props) {
                   </Form.Group>
                   <Form.Label>To</Form.Label>
                   <Form.Group className="mb-3">
-                    <Form.Control aria-label="Field Name" />
+                    <Form.Control
+                      defaultValue={item.action.to[0]}
+                      aria-label="Field Name"
+                      onChange={(e) => {
+                        let a = e.target.value;
+                        item.action.to = [a];
+                        props.value.onEditTrigger(index, item);
+                      }}
+                    />
                   </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Message</Form.Label>

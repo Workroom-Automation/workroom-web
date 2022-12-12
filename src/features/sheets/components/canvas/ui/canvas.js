@@ -10,6 +10,7 @@ import { CanvasReducers } from "./state/canvasReducers.js";
 import { canvasActionType } from "../data/models/canvasActionType.js";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import ToolTip from "../../toolTip.js";
 
 export default function Canvas(props) {
   const [sections, dispatch] = useReducer(CanvasReducers, []);
@@ -17,6 +18,8 @@ export default function Canvas(props) {
   const [selectedDescriptionIndex, setSelectedDescriptionIndex] = useState(-1);
 
   useEffect(() => {
+    // console.log(sections);
+
     props.value.onSectionDrop(sections);
   }, [sections]);
 
@@ -47,6 +50,15 @@ export default function Canvas(props) {
             return (
               <div key={`${index}-${item}`} id={styles.sector}>
                 <div id={styles.header}>
+                  <ToolTip
+                    value={{
+                      onDelete: () =>
+                        dispatch({
+                          type: canvasActionType.removeSection,
+                          data: item,
+                        }),
+                    }}
+                  />
                   <div id={styles.sectorNo}>Sector - {index + 1}</div>
                   {selectedNameIndex == index ? (
                     <InputGroup

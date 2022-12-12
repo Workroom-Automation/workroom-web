@@ -9,6 +9,14 @@ export const SectionReducers = (state, action) => {
       };
       initialState.properties["type"] = action.data.id;
       return [...state, initialState];
+    case sectionActionType.removeField:
+      let arr = [];
+      state.filter((item, index) => {
+        if (item != action.data) {
+          arr.push(item);
+        }
+      });
+      return arr;
     case sectionActionType.addFieldInfoToField:
       state[action.data.index] = action.data.fieldInfo;
       return state;

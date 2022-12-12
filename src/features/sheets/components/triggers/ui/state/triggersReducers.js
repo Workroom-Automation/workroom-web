@@ -10,7 +10,7 @@ export const TriggersReducers = (state, action) => {
         action_type: "",
         action: {
           body: "",
-          subject: "",
+          subject: "Subject",
           to: [],
         },
       };

@@ -59,6 +59,42 @@ export default function FieldProperties(props) {
         />
         Add an Options
       </button>
+      <p
+        style={{
+          color: "#7D76760",
+          lineHeight: "1",
+          marginTop: "30px",
+        }}
+      >
+        Other Properties
+      </p>
+
+      <Form>
+        <div id={styles.otherPropertiesContainer}>
+          <Form.Check
+            inline
+            label="Mark as Mandatory Field"
+            checked={props.value.isMandatory}
+            onChange={(e) => props.value.setIsMandatory(e.target.checked)}
+          />
+        </div>
+        <div id={styles.otherPropertiesContainer}>
+          <Form.Check
+            inline
+            label="Required Evidence Image"
+            checked={props.value.isAttachment}
+            onChange={(e) => props.value.setIsAttachment(e.target.checked)}
+          />
+        </div>
+        <div id={styles.otherPropertiesContainer}>
+          <Form.Check
+            inline
+            label="Required Observation"
+            checked={props.value.isObservation}
+            onChange={(e) => props.value.setIsObservation(e.target.checked)}
+          />
+        </div>
+      </Form>
     </div>
   );
 }

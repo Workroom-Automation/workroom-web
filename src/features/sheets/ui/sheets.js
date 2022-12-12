@@ -27,11 +27,13 @@ export default function Sheets() {
 
   const onFinishAuthoring = async () => {
     if (sheetId) {
+      let params = sheet;
+      params["id"] = sheetId;
       let response = await ApiClient(
         apiClientType.patch,
         process.env.REACT_APP_BASE_URL,
         `/sheet`,
-        sheet
+        params
       );
       if (response) {
         console.log(response);
@@ -75,12 +77,11 @@ export default function Sheets() {
             height="50px"
             padding="0 30px"
             background=" rgba(208, 235, 255, 0.35)"
-            title="T 1: Pre-Delivery Inspection"
-            icon={() => <BillLineIcon color="#000000" />}
+            title={sheet.name}
+            icon={() => (
+              <BillLineIcon color="#000000" style={{ marginRight: "10px" }} />
+            )}
           />
-          <button type="button" onClick={onFinishAuthoring}>
-            Finish Authoring
-          </button>
         </div>
         <div className="d-flex">
           <Tabs
@@ -95,11 +96,13 @@ export default function Sheets() {
             style={{ marginRight: "20px" }}
           />
           <CustomButton
+            type="button"
             height="50px"
             padding="0 18px"
             color="#ffffff"
             background="gradient"
             title="Finish Authoring"
+            onClick={onFinishAuthoring}
           />
         </div>
       </div>
