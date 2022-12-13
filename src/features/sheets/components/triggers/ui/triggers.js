@@ -17,7 +17,7 @@ export default function Triggers(props) {
     (async () => {
       let response = await ApiClient(
         apiClientType.get,
-        process.env.REACT_APP_BASE_URL,
+        process.env.REACT_APP_SHEETS_BASE_URL,
         `/sheet/canvas`,
         {}
       );

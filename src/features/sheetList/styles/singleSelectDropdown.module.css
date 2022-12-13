@@ -1,0 +1,11 @@
+#dropdown {
+  display: inline;
+  margin-right: 10px;
+}
+#button {
+  background: white;
+  color: black;
+  border: 1px solid #dadada;
+  padding: 12px;
+  border-radius: 30px !important;
+}

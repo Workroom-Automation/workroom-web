@@ -31,7 +31,7 @@ export default function Sheets() {
       params["id"] = sheetId;
       let response = await ApiClient(
         apiClientType.patch,
-        process.env.REACT_APP_BASE_URL,
+        process.env.REACT_APP_SHEETS_BASE_URL,
         `/sheet`,
         params
       );
@@ -42,7 +42,7 @@ export default function Sheets() {
     } else {
       let response = await ApiClient(
         apiClientType.post,
-        process.env.REACT_APP_BASE_URL,
+        process.env.REACT_APP_SHEETS_BASE_URL,
         `/sheet`,
         sheet
       );

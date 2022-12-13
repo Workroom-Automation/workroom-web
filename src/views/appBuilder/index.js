@@ -5,7 +5,6 @@ import SearchInput from "../../components/inputs/searchInput";
 import Tabs from "../../components/tabs";
 import AddCircleLineIcon from "remixicon-react/AddCircleLineIcon";
 import PeopleTable from "../people/peopleTable";
-import CustomTable from "../../components/tables";
 import CustomModal from "../../components/modals";
 import DragdropIcon from "remixicon-react/DragDropLineIcon";
 import { AppSquareIcon } from "../../assets/icons";
@@ -119,40 +118,6 @@ export default function AppBuilder() {
         />
       </div>
       <div style={{ margin: "15px 42px 0 0" }}>
-        <CustomTable
-          internalBorder={true}
-          headerStyle={{
-            borderLeft: "1px solid #DADADA",
-            fontWeight: "700",
-            color: "#000000",
-          }}
-          columns={[
-            { title: "Sheet ID", dataIndex: "sheetId" },
-            { title: "Sheet Name", dataIndex: "sheetName" },
-            { title: "Linked Asset", dataIndex: "linkedAsset" },
-            { title: "Sub-Asset", dataIndex: "subAsset" },
-            { title: "Steps", dataIndex: "steps" },
-            { title: "Version", dataIndex: "version" },
-          ]}
-          data={[
-            {
-              sheetId: "1",
-              sheetName: "The First",
-              linkedAsset: "Propeller Shaft",
-              subAsset: "Post-Production QA  ",
-              steps: "3",
-              version: "1.0",
-            },
-            {
-              sheetId: "2",
-              sheetName: "The Second",
-              linkedAsset: "Propeller Shaft",
-              subAsset: "Post-Production QA  ",
-              steps: "31",
-              version: "99.0",
-            },
-          ]}
-        />
         <CustomModal
           show={true}
           setShow={setAuthorSheetModal}
