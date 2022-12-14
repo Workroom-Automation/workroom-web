@@ -24,7 +24,7 @@ const allRoutes = [
     component: People,
   },
   {
-    path: "/appbuilder",
+    path: "/appbuilder/:appId",
     name: "Sheet List",
     component: SheetList,
   },

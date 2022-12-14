@@ -20,14 +20,15 @@ export default function SheetTable(props) {
       </thead>
       <tbody>
         {sheets.data?.map((item, index) => {
+          let asset = props.value.assets?.find((i) => i.id == item.asset_id);
           return (
             <tr key={item.id}>
               <td>{item.external_code}</td>
               <td>{item.name}</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
+              <td>{asset?.name}</td>
+              <td>{item.process_id}</td>
+              <td></td>
+              <td></td>
             </tr>
           );
         })}

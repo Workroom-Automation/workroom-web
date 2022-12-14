@@ -10,13 +10,15 @@ import CreateAppModal from "./createAppModal";
 import SettingModal from "./settingModal";
 import { getWorkroomApps } from "./api";
 import { appTypes } from "../../utils/constant";
+import { useNavigate } from "react-router-dom";
+
 const CardContent = ({
   workroom,
   setShowCreateAppModal,
   setShowSettingModal,
   setSelectedWorkroomId,
 }) => {
-  const [apps, setApps] = useState()
+  const [apps, setApps] = useState();
   const countCardStyle = {
     height: "32px",
     padding: "17px 8px",
@@ -29,15 +31,16 @@ const CardContent = ({
     cursor: "pointer",
   };
   useEffect(() => {
-    getWorkroomApps({workroom_id:workroom.id}, (data) => {
-    setApps(data.applications)
-    })
-  }, [])
-  
+    getWorkroomApps({ workroom_id: workroom.id }, (data) => {
+      setApps(data.applications);
+    });
+  }, []);
+  console.log(apps);
+  let navigate = useNavigate();
+
   return (
     <div>
       <div className="d-flex justify-content-between ">
-        
         <div>
           <img height="33px" src={logo} />
           <b style={{ fontSize: "14px" }}>{workroom?.name}</b>
@@ -62,7 +65,7 @@ const CardContent = ({
               setSelectedWorkroomId(workroom?.id);
             }}
             content={() => (
-              <div >
+              <div>
                 <AddIcon color=" #009AFF" />
                 Create New App
               </div>
@@ -80,37 +83,38 @@ const CardContent = ({
       </div>
       <hr style={{ margin: "0 -17px" }} />
 
-      {appTypes.map((type,id)=>{
+      {appTypes.map((type, id) => {
         return (
           <div key={id} className="row m-0 ">
-        <span
-          style={{
-            color: " #7D7676",
-            fontSize: "14px",
-            marginBottom: "22px",
-            marginTop: "27px",
-          }}
-        >
-          {type.label} ({apps?.filter((app)=>app.type===type.value).length})
-        </span>
-        {apps?.slice(0, 6).map((app, index) => {
-          if(app.type===type.value)
-          return (
-            <div key={index} className="d-flex flex-column   mb-4 col-2">
-              <CustomButton
-                width="80px"
-                height="60px"
-                border=" 1px solid #DADADA"
-                icon={() => <BillIcon color="#09121F" />}
-              />
-              <b style={{ fontSize: "14px" }}>{app.name}</b>
-            </div>
-          );
-        })}
-      </div>
-        )
+            <span
+              style={{
+                color: " #7D7676",
+                fontSize: "14px",
+                marginBottom: "22px",
+                marginTop: "27px",
+              }}
+            >
+              {type.label} (
+              {apps?.filter((app) => app.type === type.value).length})
+            </span>
+            {apps?.slice(0, 6).map((app, index) => {
+              if (app.type === type.value)
+                return (
+                  <div key={index} className="d-flex flex-column   mb-4 col-2">
+                    <CustomButton
+                      width="80px"
+                      height="60px"
+                      border=" 1px solid #DADADA"
+                      onClick={() => navigate(`/appbuilder/${app.id}`)}
+                      icon={() => <BillIcon color="#09121F" />}
+                    />
+                    <b style={{ fontSize: "14px" }}>{app.name}</b>
+                  </div>
+                );
+            })}
+          </div>
+        );
       })}
-   
     </div>
   );
 };
@@ -118,9 +122,7 @@ export default function WorkroomList({ data }) {
   const [showCreateAppModal, setShowCreateAppModal] = useState(false);
   const [showSettingModal, setShowSettingModal] = useState(false);
   const [selectedWorkroomId, setSelectedWorkroomId] = useState(null);
-  useEffect(() => {
-    console.log(data);
-  }, []);
+  console.log(data);
   return (
     <div className="row">
       {data && data.length > 0 ? (

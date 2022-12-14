@@ -7,7 +7,7 @@ import DragdropIcon from "remixicon-react/DragDropLineIcon";
 // import { AppSquareIcon } from "../../assets/icons";
 // import CustomTextInput from "../../components/inputs/textInput";
 import BillIcon from "remixicon-react/BillLineIcon";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SheetTable from "../components/sheetTable/ui/sheetTable.js";
 import SingleSelectDropdown from "../components/singleSelectDropdown/ui/singleSelectDropdown.js";
 import ToggleButton from "../components/toggleButton.js";
@@ -16,17 +16,26 @@ import { SheetListReducers } from "./state/sheetListReducers.js";
 import { sheetListActionType } from "../data/models/sheetListActionType.js";
 import { AssetListReducers } from "./state/assetListReducers.js";
 import { assetListActionType } from "../data/models/assetListActionType.js";
+import { ProcessListReducers } from "./state/processListReducers.js";
+import { processListActionType } from "../data/models/processListActionType.js";
 import { apiClientType } from "../../../clients/data/models/apiClientType.js";
 import { ApiClient } from "../../../clients/apiClient.js";
 
 export default function SheetList() {
+  let params = useParams();
   const [selectedAsset, setSelectedAsset] = useState({});
+  const [selectedProcess, setSelectedProcess] = useState({});
   const [sheets, dispatchSheets] = useReducer(SheetListReducers, {
     data: null,
     loading: false,
     error: null,
   });
   const [assets, dispatchAssets] = useReducer(AssetListReducers, {
+    data: null,
+    loading: false,
+    error: null,
+  });
+  const [processes, dispatchProcesses] = useReducer(ProcessListReducers, {
     data: null,
     loading: false,
     error: null,
@@ -42,6 +51,8 @@ export default function SheetList() {
           limit: 50,
           offset: 0,
           ...(selectedAsset.id ? { asset_id: selectedAsset.id } : null),
+          ...(selectedProcess.id ? { process_id: selectedProcess.id } : null),
+          application_id: params.appId,
         }
       );
       console.log(response);
@@ -52,14 +63,14 @@ export default function SheetList() {
         });
       }
     })();
-  }, [selectedAsset]);
+  }, [selectedAsset, selectedProcess]);
 
   useEffect(() => {
     (async () => {
       dispatchAssets({ type: assetListActionType.loadingAssetList });
       let response = await ApiClient(
         apiClientType.get,
-        process.env.REACT_APP_ASSETS_BASE_URL,
+        process.env.REACT_APP_MASTER_BASE_URL,
         `/asset`,
         {
           type: "LINE_ASSET",
@@ -75,6 +86,31 @@ export default function SheetList() {
     })();
   }, []);
 
+  const getProcesses = async (assetId) => {
+    if (assetId) {
+      dispatchProcesses({ type: processListActionType.loadingProcessList });
+      let response = await ApiClient(
+        apiClientType.get,
+        process.env.REACT_APP_MASTER_BASE_URL,
+        `/asset/${assetId}`,
+        {
+          includeProcess: true,
+        }
+      );
+      console.log(response);
+      if (response) {
+        dispatchProcesses({
+          type: processListActionType.dataProcessList,
+          data: response.mapping,
+        });
+      }
+    } else {
+      dispatchProcesses({
+        type: processListActionType.dataProcessList,
+        data: [],
+      });
+    }
+  };
   let navigate = new useNavigate();
   return (
     <div style={{ marginRight: "42px" }}>
@@ -96,15 +132,29 @@ export default function SheetList() {
                 : "Select Asset",
               selectValue: (value) => {
                 setSelectedAsset(value);
+                setSelectedProcess({});
+                getProcesses(value.id);
+              },
+              extractDataFromList: (item) => {
+                return { id: item.id, name: item.name };
               },
             }}
           />
           <SingleSelectDropdown
             value={{
-              state: {},
-              buttonText: selectedAsset.id
-                ? selectedAsset.name
+              state: processes,
+              buttonText: selectedProcess.id
+                ? selectedProcess.name
                 : "Select Sub-Asset",
+              selectValue: (value) => {
+                setSelectedProcess(value);
+              },
+              extractDataFromList: (item) => {
+                return {
+                  id: item.position,
+                  name: item.process.process_name,
+                };
+              },
             }}
           />
         </div>
@@ -123,22 +173,8 @@ export default function SheetList() {
             },
           }}
         />
-        {
-          // <CustomButton
-          //   onClick={() => {
-          //     navigate("/appbuilder/authorsheet/sheets");
-          //   }}
-          //   icon={() => <AddCircleLineIcon color="#ffffff" />}
-          //   color="#ffffff"
-          //   width="172px"
-          //   background="gradient"
-          //   title="Author New Sheet"
-          //   margin="0 42px 0 0 "
-          // />
-        }
       </div>
-
-      <SheetTable value={{ sheets, assets }} />
+      <SheetTable value={{ sheets: sheets, assets: assets.data }} />
 
       {
         // <CustomModal
@@ -190,54 +226,6 @@ export default function SheetList() {
         //           </div>
         //         </div>
         //       </center>
-        //     );
-        //   }}
-        // />
-        // <CustomModal
-        //   show={sheetDetailModal}
-        //   setShow={setSheetDetailModal}
-        //   body={() => {
-        //     return (
-        //       <div>
-        //         <div
-        //           style={{
-        //             background: "#D0EBFF",
-        //             borderRadius: "11px 11px 0 0",
-        //             padding: "19px 0",
-        //           }}
-        //           className="d-flex justify-content-center"
-        //         >
-        //           <BillIcon color=" #09121F" />
-        //           &nbsp; New Sheet Details
-        //         </div>
-        //         <div style={{ padding: "25px" }}>
-        //           <CustomTextInput title="Sheet Name" />
-        //           <CustomTextInput
-        //             style={{ margin: "10px 0" }}
-        //             title="Sheet Name"
-        //           />
-        //           <div className="row">
-        //             <CustomTextInput className="col-6" title="Asset" />
-        //             <CustomTextInput className="col-6" title="Sub-Asset" />
-        //           </div>
-        //         </div>
-        //         <div
-        //           style={{ margin: "28px 0 25px 0" }}
-        //           className="d-flex justify-content-center"
-        //         >
-        //           <div className="col-3">
-        //             <CustomButton
-        //               onClick={() => {
-        //                 navigate("/appbuilder/authorsheet/2");
-        //               }}
-        //               padding="10px 15px"
-        //               color="#ffffff"
-        //               background="gradient"
-        //               title="Start Authoring"
-        //             />
-        //           </div>
-        //         </div>
-        //       </div>
         //     );
         //   }}
         // />

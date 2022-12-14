@@ -1,19 +1,19 @@
-const apiBaseUrl = "http://13.233.99.97:8001/";
+const apiBaseUrl = process.env.REACT_APP_MASTER_BASE_URL;
 const apiUrls = {
   workroom: {
-    get: "api/v1/workroom/",
-    create: "/api/v1/workroom/",
+    get: "/workroom/",
+    create: "/workroom/",
     apps: {
-      get: (workroomId) => `/api/v1/application?workroom_id=${workroomId}`,
-      create: "/api/v1/application",
+      get: (workroomId) => `/application?workroom_id=${workroomId}`,
+      create: "/application",
     },
   },
   masterData: {
-    getAssets: (type) => `/api/v1/asset?type=${type}`,
-    createAssets: "/api/v1/asset",
-    getAssetDetails: (assetId) => `/api/v1/asset/${assetId}`,
-    attachProcess: `/api/v1/asset/process`,
-    detachProcess: `/api/v1/asset/process`,
+    getAssets: (type) => `/asset?type=${type}`,
+    createAssets: "/asset",
+    getAssetDetails: (assetId) => `/asset/${assetId}`,
+    attachProcess: `/asset/process`,
+    detachProcess: `/asset/process`,
   },
 };
 

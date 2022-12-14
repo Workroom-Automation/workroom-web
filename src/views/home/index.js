@@ -24,9 +24,7 @@ export default function Home() {
   useEffect(() => {
     getWorkrooms((data) => setWorkroomData(data));
   }, []);
-  useEffect(()=>{
-    console.count();
-  })
+  console.count();
   // const workroomData = [
   //   {
   //     name: "Quality Workroom",

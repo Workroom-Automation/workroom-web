@@ -6,6 +6,7 @@
 }
 #table td,
 #table th {
+  cursor: pointer;
   border-width: 1px;
   padding: 20px;
   border-radius: 10px !important;

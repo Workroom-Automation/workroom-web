@@ -17,14 +17,13 @@ export default function SingleSelectDropdown(props) {
               Select...
             </Dropdown.Item>
             {state?.data?.map((item, index) => {
+              let data = props.value.extractDataFromList(item);
               return (
                 <Dropdown.Item
-                  key={item.id}
-                  onClick={() =>
-                    props.value.selectValue({ id: item.id, name: item.name })
-                  }
+                  key={data.id}
+                  onClick={() => props.value.selectValue(data)}
                 >
-                  {item.name}
+                  {data.name}
                 </Dropdown.Item>
               );
             })}
