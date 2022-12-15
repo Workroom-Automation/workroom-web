@@ -1,7 +1,10 @@
 import Table from "react-bootstrap/Table";
 import styles from "../../../styles/sheetTable.module.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function SheetTable(props) {
+  const params = useParams();
+  let navigate = new useNavigate();
   let sheets = props.value.sheets;
   if (sheets.loading) {
     return "...loading";
@@ -22,7 +25,12 @@ export default function SheetTable(props) {
         {sheets.data?.map((item, index) => {
           let asset = props.value.assets?.find((i) => i.id == item.asset_id);
           return (
-            <tr key={item.id}>
+            <tr
+              key={item.id}
+              onClick={() =>
+                navigate(`/appbuilder/${params.appId}/authorsheet/${item.id}`)
+              }
+            >
               <td>{item.external_code}</td>
               <td>{item.name}</td>
               <td>{asset?.name}</td>

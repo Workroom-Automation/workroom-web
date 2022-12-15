@@ -9,15 +9,11 @@ import DragdropIcon from "remixicon-react/DragDropLineIcon";
 import BillIcon from "remixicon-react/BillLineIcon";
 import { useNavigate, useParams } from "react-router-dom";
 import SheetTable from "../components/sheetTable/ui/sheetTable.js";
-import SingleSelectDropdown from "../components/singleSelectDropdown/ui/singleSelectDropdown.js";
+import SingleSelectDropdown from "../../../common/components/singleSelectDropdown/ui/singleSelectDropdown.js";
 import ToggleButton from "../components/toggleButton.js";
 import PrimaryButton from "../components/primaryButton.js";
-import { SheetListReducers } from "./state/sheetListReducers.js";
-import { sheetListActionType } from "../data/models/sheetListActionType.js";
-import { AssetListReducers } from "./state/assetListReducers.js";
-import { assetListActionType } from "../data/models/assetListActionType.js";
-import { ProcessListReducers } from "./state/processListReducers.js";
-import { processListActionType } from "../data/models/processListActionType.js";
+import { DataFetchReducers } from "../../../common/states/dataFetch/dataFetchReducers.js";
+import { dataFetchActionType } from "../../../common/states/dataFetch/dataFetchActionType.js";
 import { apiClientType } from "../../../clients/data/models/apiClientType.js";
 import { ApiClient } from "../../../clients/apiClient.js";
 
@@ -25,24 +21,26 @@ export default function SheetList() {
   let params = useParams();
   const [selectedAsset, setSelectedAsset] = useState({});
   const [selectedProcess, setSelectedProcess] = useState({});
-  const [sheets, dispatchSheets] = useReducer(SheetListReducers, {
+  const [sheets, dispatchSheets] = useReducer(DataFetchReducers, {
     data: null,
     loading: false,
     error: null,
   });
-  const [assets, dispatchAssets] = useReducer(AssetListReducers, {
+  const [assets, dispatchAssets] = useReducer(DataFetchReducers, {
     data: null,
     loading: false,
     error: null,
   });
-  const [processes, dispatchProcesses] = useReducer(ProcessListReducers, {
+  const [processes, dispatchProcesses] = useReducer(DataFetchReducers, {
     data: null,
     loading: false,
     error: null,
   });
   useEffect(() => {
     (async () => {
-      dispatchSheets({ type: sheetListActionType.loadingSheetList });
+      dispatchSheets({
+        type: dataFetchActionType.loading,
+      });
       let response = await ApiClient(
         apiClientType.get,
         process.env.REACT_APP_SHEETS_BASE_URL,
@@ -58,7 +56,7 @@ export default function SheetList() {
       console.log(response);
       if (response) {
         dispatchSheets({
-          type: sheetListActionType.dataSheetList,
+          type: dataFetchActionType.data,
           data: response,
         });
       }
@@ -67,7 +65,9 @@ export default function SheetList() {
 
   useEffect(() => {
     (async () => {
-      dispatchAssets({ type: assetListActionType.loadingAssetList });
+      dispatchAssets({
+        type: dataFetchActionType.loading,
+      });
       let response = await ApiClient(
         apiClientType.get,
         process.env.REACT_APP_MASTER_BASE_URL,
@@ -79,7 +79,7 @@ export default function SheetList() {
       console.log(response);
       if (response) {
         dispatchAssets({
-          type: assetListActionType.dataAssetList,
+          type: dataFetchActionType.data,
           data: response,
         });
       }
@@ -88,7 +88,7 @@ export default function SheetList() {
 
   const getProcesses = async (assetId) => {
     if (assetId) {
-      dispatchProcesses({ type: processListActionType.loadingProcessList });
+      dispatchProcesses({ type: dataFetchActionType.loading });
       let response = await ApiClient(
         apiClientType.get,
         process.env.REACT_APP_MASTER_BASE_URL,
@@ -100,13 +100,13 @@ export default function SheetList() {
       console.log(response);
       if (response) {
         dispatchProcesses({
-          type: processListActionType.dataProcessList,
+          type: dataFetchActionType.data,
           data: response.mapping,
         });
       }
     } else {
       dispatchProcesses({
-        type: processListActionType.dataProcessList,
+        type: dataFetchActionType.data,
         data: [],
       });
     }
@@ -169,7 +169,7 @@ export default function SheetList() {
               </>
             ),
             onClick: () => {
-              navigate("/appbuilder/authorsheet/sheets");
+              navigate(`/appbuilder/${params.appId}/authorsheet/new`);
             },
           }}
         />

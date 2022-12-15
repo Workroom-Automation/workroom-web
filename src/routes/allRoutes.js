@@ -29,7 +29,7 @@ const allRoutes = [
     component: SheetList,
   },
   {
-    path: "/appbuilder/authorsheet/sheets",
+    path: "/appbuilder/:appId/authorsheet/:sheetId",
     name: "Sheets",
     component: Sheets,
     withoutNav: true,

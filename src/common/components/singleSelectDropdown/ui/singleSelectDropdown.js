@@ -1,5 +1,5 @@
 import Dropdown from "react-bootstrap/Dropdown";
-import styles from "../../../styles/singleSelectDropdown.module.css";
+import styles from "../styles/singleSelectDropdown.module.css";
 
 export default function SingleSelectDropdown(props) {
   let state = props.value.state;

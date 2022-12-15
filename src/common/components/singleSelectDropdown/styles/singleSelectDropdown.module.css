@@ -3,6 +3,8 @@
   margin-right: 10px;
 }
 #button {
+  overflow-x: auto;
+  width: 170px;
   background: white;
   color: black;
   border: 1px solid #dadada;

@@ -16,8 +16,11 @@ import { apiClientType } from "../../../clients/data/models/apiClientType.js";
 import { ApiClient } from "../../../clients/apiClient.js";
 import { SheetReducers } from "./state/sheetReducers.js";
 import { sheetActionType } from "../data/models/sheetActionType.js";
+import { useParams } from "react-router-dom";
 
 export default function Sheets() {
+  const params = useParams();
+  console.log(params);
   const tabList = ["Authoring", "Preview"];
   const [activeTab, setActiveTab] = useState(0);
   const [sheet, dispatch] = useReducer(SheetReducers, {});
@@ -25,6 +28,22 @@ export default function Sheets() {
   const fieldTypes = Object.keys(fields);
   const [showModal, setShowModal] = useState(true);
 
+  useEffect(() => {
+    (async () => {
+      if (params.sheetId != "new") {
+        let response = await ApiClient(
+          apiClientType.get,
+          process.env.REACT_APP_SHEETS_BASE_URL,
+          `/sheet/${params.sheetId}`,
+          {}
+        );
+        if (response) {
+          console.log(response);
+          setSheetId(response.id);
+        }
+      }
+    })();
+  }, []);
   const onFinishAuthoring = async () => {
     if (sheetId) {
       let params = sheet;
