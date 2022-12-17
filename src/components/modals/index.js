@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, ModalHeader } from "react-bootstrap";
-import './style.css'
+import "./style.css";
 export default function CustomModal({
   show = false,
   setShow = () => {},
@@ -8,11 +8,12 @@ export default function CustomModal({
   footer: Footer = null,
   header: Header = null,
   style = {},
-  size = "lg",
+  size = "md",
   className = "",
 }) {
   return (
     <Modal
+      id="modal"
       style={style}
       centered
       size={size}
@@ -23,12 +24,15 @@ export default function CustomModal({
       {/* <Header/> */}
       {Header && (
         <Modal.Header style={{ border: "none" }}>
-         <Header/>
+          <Header />
         </Modal.Header>
       )}
 
       {Body && (
-        <Modal.Body style={{borderRadius:"11px"}} className="p-0">
+        <Modal.Body
+          style={{ borderRadius: "11px", margin: " 0 20px 0 20px" }}
+          className="p-0"
+        >
           <Body />
         </Modal.Body>
       )}

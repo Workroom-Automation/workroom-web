@@ -1,4 +1,4 @@
-import styles from "../styles/primaryButton.module.css";
+import styles from "./primaryButton.module.css";
 
 export default function PrimaryButton(props) {
   return (

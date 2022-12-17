@@ -25,58 +25,6 @@ export default function Home() {
     getWorkrooms((data) => setWorkroomData(data));
   }, []);
   console.count();
-  // const workroomData = [
-  //   {
-  //     name: "Quality Workroom",
-  //     appCount: 12,
-  //     peopleCount: 11,
-  //     adminName: "Chaitanya Kumar",
-  //     appList: {
-  //       lineApps: [
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //       ],
-  //       userApps: [{ appName: "Supplier PDIs" }],
-  //     },
-  //   },
-  //   {
-  //     name: "Quality Workroom",
-  //     appCount: 12,
-  //     peopleCount: 11,
-  //     adminName: "Chaitanya Kumar",
-  //     appList: {
-  //       lineApps: [
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //         { appName: "CTQ System" },
-  //         { appName: "CAPA System" },
-  //       ],
-  //       userApps: [{ appName: "Supplier PDIs" }],
-  //     },
-  //   },
-  // ];
   let navigate = useNavigate();
   let userName = "Abhinav";
   const [showWorkspaceModal, setShowWorkspaceModal] = useState(false);

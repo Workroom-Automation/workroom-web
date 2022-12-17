@@ -1,0 +1,37 @@
+#workroomCard {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #dadada;
+  padding: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+#createButton {
+  border-radius: 10px;
+  height: 37px;
+  background: none;
+  color: #009aff;
+  font-weight: bold;
+  border: 1px solid #009aff;
+}
+#settingCard {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #dadada;
+  padding: 5px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+#applicationCard {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #dadada;
+  padding: 20px;
+  width: 100px;
+  text-align: center;
+}
+#appTypeText {
+  color: #7d7676;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}

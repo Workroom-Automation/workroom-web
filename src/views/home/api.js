@@ -25,7 +25,6 @@ const getWorkrooms = async (
 ) => {
   try {
     const { data = {} } = await apiClient.get(apiUrls.workroom.get);
-    console.log(data, "ff");
     successCallback(data.workrooms);
   } catch (e) {
     console.log(e.message);

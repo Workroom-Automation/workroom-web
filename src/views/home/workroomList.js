@@ -11,6 +11,8 @@ import SettingModal from "./settingModal";
 import { getWorkroomApps } from "./api";
 import { appTypes } from "../../utils/constant";
 import { useNavigate } from "react-router-dom";
+import { apiClientType } from "../../clients/data/models/apiClientType.js";
+import { ApiClient } from "../../clients/apiClient.js";
 
 const CardContent = ({
   workroom,
@@ -32,10 +34,10 @@ const CardContent = ({
   };
   useEffect(() => {
     getWorkroomApps({ workroom_id: workroom.id }, (data) => {
+      console.log(data);
       setApps(data.applications);
     });
   }, []);
-  console.log(apps);
   let navigate = useNavigate();
 
   return (
@@ -46,18 +48,6 @@ const CardContent = ({
           <b style={{ fontSize: "14px" }}>{workroom?.name}</b>
         </div>
         <div style={{ height: "50px" }} className="d-flex">
-          {/* <CustomButton
-            width="190px"
-            color=" #009AFF"
-            title="Create New App"
-            icon={() => <AddIcon color=" #009AFF" />}
-            border="1px solid  #009AFF"
-          />
-          <CustomButton
-          width="70px"
-            border="1px solid #DADADA"
-            icon={() => <SettingIcon />}
-          /> */}
           <Card
             onClick={() => {
               console.log("clicked");

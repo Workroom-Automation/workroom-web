@@ -5,12 +5,13 @@ import People from "../views/people";
 import AppBuilder from "../views/appBuilder";
 import Sheets from "../features/sheets/ui/sheets.js";
 import SheetList from "../features/sheetList/ui/sheetList.js";
+import Workroom from "../features/workroom/ui/workroom.js";
 
 const allRoutes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Workroom",
+    component: Workroom,
     withoutNav: true,
   },
   {

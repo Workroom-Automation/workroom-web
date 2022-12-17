@@ -27,14 +27,22 @@ const Footer = ({ onSubmit }) => {
     </div>
   );
 };
-const Body = ({ setShowWorkspaceModal}) => {
+const Body = ({ setShowWorkspaceModal, refetchFunction }) => {
   const [adminUsers, setAdminUsers] = useState([]);
   const [workroomName, setWorkroomName] = useState();
   const onSubmit = async () => {
-    const newWorkroom = await createWorkroom({
-      name: workroomName,
-      admins: adminUsers,
-    }, ()=>{ setShowWorkspaceModal(false)});
+    const newWorkroom = await createWorkroom(
+      {
+        name: workroomName,
+        admins: adminUsers,
+      },
+      () => {
+        setShowWorkspaceModal(false);
+      }
+    );
+    if (newWorkroom) {
+      refetchFunction();
+    }
   };
   return (
     <div>
@@ -66,11 +74,17 @@ const Body = ({ setShowWorkspaceModal}) => {
 export default function AddWorkspaceModal({
   showWorkspaceModal = false,
   setShowWorkspaceModal = () => {},
+  refetchFunction = () => {},
 }) {
   return (
     <div>
       <CustomModal
-        body={() => <Body  setShowWorkspaceModal={ setShowWorkspaceModal}/>}
+        body={() => (
+          <Body
+            setShowWorkspaceModal={setShowWorkspaceModal}
+            refetchFunction={refetchFunction}
+          />
+        )}
         header={() => <Header />}
         show={showWorkspaceModal}
         setShow={setShowWorkspaceModal}

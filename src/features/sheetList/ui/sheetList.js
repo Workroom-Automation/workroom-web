@@ -11,7 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import SheetTable from "../components/sheetTable/ui/sheetTable.js";
 import SingleSelectDropdown from "../../../common/components/singleSelectDropdown/ui/singleSelectDropdown.js";
 import ToggleButton from "../components/toggleButton.js";
-import PrimaryButton from "../components/primaryButton.js";
+import PrimaryButton from "../../../common/crunches/primaryButton/primaryButton.js";
 import { DataFetchReducers } from "../../../common/states/dataFetch/dataFetchReducers.js";
 import { dataFetchActionType } from "../../../common/states/dataFetch/dataFetchActionType.js";
 import { apiClientType } from "../../../clients/data/models/apiClientType.js";

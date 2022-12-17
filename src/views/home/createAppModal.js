@@ -12,7 +12,11 @@ const Header = () => {
     </div>
   );
 };
-const Body = ({ selectedWorkroomId, setShowCreateAppModal }) => {
+const Body = ({
+  selectedWorkroomId,
+  setShowCreateAppModal,
+  refetchFunction,
+}) => {
   const fieldHeadingStyle = {
     fontSize: "14px",
     marginBottom: "12px",
@@ -21,7 +25,7 @@ const Body = ({ selectedWorkroomId, setShowCreateAppModal }) => {
   const [users, setUsers] = useState([]);
   const [selectedAppType, setSelectedAppType] = useState();
   const [appName, setAppName] = useState("");
- 
+
   const onSubmit = () => {
     if (users.length > 0 && selectedAppType && appName) {
       createWorkroomApp(
@@ -31,7 +35,10 @@ const Body = ({ selectedWorkroomId, setShowCreateAppModal }) => {
           user: [...users],
           workroom_id: selectedWorkroomId,
         },
-        () => {setShowCreateAppModal(false)}
+        () => {
+          refetchFunction();
+          setShowCreateAppModal(false);
+        }
       );
     } else {
       alert("Please fill all the fields");
@@ -118,12 +125,19 @@ export default function CreateAppModal({
   showCreateAppModal,
   setShowCreateAppModal,
   selectedWorkroomId,
+  refetchFunction,
 }) {
   return (
     <div>
       <CustomModal
         header={() => <Header />}
-        body={() => <Body setShowCreateAppModal={setShowCreateAppModal} selectedWorkroomId={selectedWorkroomId} />}
+        body={() => (
+          <Body
+            setShowCreateAppModal={setShowCreateAppModal}
+            selectedWorkroomId={selectedWorkroomId}
+            refetchFunction={refetchFunction}
+          />
+        )}
         // footer={Footer}
         show={showCreateAppModal}
         setShow={setShowCreateAppModal}

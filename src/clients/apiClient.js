@@ -1,8 +1,15 @@
 import { apiClientType } from "./data/models/apiClientType.js";
 import axios from "axios";
-export async function ApiClient(type, baseUrl, urlExtension, params) {
+export async function ApiClient(
+  type,
+  baseUrl,
+  urlExtension,
+  params,
+  headerParams
+) {
   let headers = {
     "Content-Type": "application/json",
+    ...(headerParams ? { ...headerParams } : null),
   };
   let requestOptions = {
     method: type,

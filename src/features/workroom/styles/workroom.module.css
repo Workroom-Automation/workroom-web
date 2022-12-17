@@ -1,0 +1,8 @@
+#requestsCard {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #dadada;
+  padding: 15px;
+  width: 140px;
+  text-align: center;
+}
