@@ -6,12 +6,12 @@ const apiInstance = () => {
   });
 
   api.interceptors.request.use(async (config) => {
-    let accessToken = "Harry Potter";
+    let accessToken = localStorage.getItem("token");
     // let accessToken = localStorage.getItem(localStorageConstants.accessToken);
     if (accessToken) {
       if (config.method !== "OPTIONS") {
-        // config.headers.authorization = `Bearer ${accessToken}`;
-        config.headers["x-user-id"] = "Harry Potter"
+        config.headers.authorization = `Bearer ${accessToken}`;
+        config.headers["x-user-id"] = "Harry Potter";
       }
     }
     return config;

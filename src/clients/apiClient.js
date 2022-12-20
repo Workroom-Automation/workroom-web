@@ -8,6 +8,7 @@ export async function ApiClient(
   headerParams
 ) {
   let headers = {
+    authorization: `Bearer ${localStorage.getItem("token")}`,
     "Content-Type": "application/json",
     ...(headerParams ? { ...headerParams } : null),
   };

@@ -4,8 +4,8 @@ const apiUrls = {
     get: "/workroom/",
     create: "/workroom/",
     apps: {
-      get: (workroomId) => `/application?workroom_id=${workroomId}`,
-      create: "/application",
+      get: (workroomId) => `/application/?workroom_id=${workroomId}`,
+      create: "/application/",
     },
   },
   masterData: {
