@@ -10,22 +10,8 @@ import AddNewModal from "../../components/modals/AddNewModal";
 import SearchInput from "../../components/inputs/searchInput";
 import { getAssetDetails, getAssets } from "./api";
 export default function MasterDataTable({ type }) {
-  const processes = [
-    // { processName: "TY Sub Assembly", appCount: 11 },
-    // { processName: "Knock Down Station", appCount: 1 },
-    // { processName: "TY Sub Assembly", appCount: 11 },
-    // { processName: "Knock Down Station", appCount: 1 },
-    // { processName: "TY Sub Assembly", appCount: 11 },
-    // { processName: "Knock Down Station", appCount: 1 },
-    // { processName: "TY Sub Assembly", appCount: 11 },
-    // { processName: "Knock Down Station", appCount: 1 },
-  ];
-  // const apps = [
-  //   { name: "Light Duty Line ", id: "100001" },
-  //   { name: "Heavy Duty Line ", id: "100003" },
-  //   { name: "Light Duty Line ", id: "100001" },
-  //   { name: "Heavy Duty Line ", id: "100003" },
-  // ];
+  let processes = [];
+
   const [apps, setApps] = useState();
   const fetchData = () => {
     if (type === "Lines") {

@@ -1,0 +1,38 @@
+#table {
+  border: 1px solid #dadada;
+  background: white;
+  border-radius: 10px;
+  text-align: center;
+}
+#product {
+  padding: 15px;
+  font-weight: bold;
+}
+.selected {
+  background: #d0ebff;
+  border: 1px solid #009aff;
+}
+#productId {
+  color: #7d7676;
+  font-size: 10px;
+  margin: 0px;
+}
+#productDetails {
+  border: 1px solid #dadada;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: left;
+}
+#productDetailsCount {
+  color: #009aff;
+  font-weight: bold;
+  margin: 0px;
+}
+#processDetails {
+  margin-top: 14px;
+  border: 1px solid #dadada;
+  border-radius: 10px;
+  padding: 20px 30px 30px 30px;
+  text-align: left;
+  background: #d0ebff;
+}

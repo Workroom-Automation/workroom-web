@@ -1,0 +1,15 @@
+#button {
+  background: white;
+  color: black;
+  padding: 8px;
+  border: 1px solid #dadada;
+  border-radius: 10px;
+}
+#count {
+  font-weight: bold;
+  margin: 10px;
+}
+#child {
+  padding: 10px;
+  border-right: 1px solid #dadada;
+}

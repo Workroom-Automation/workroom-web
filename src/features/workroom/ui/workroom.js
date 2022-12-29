@@ -49,7 +49,7 @@ export default function Workroom() {
           icon={ServerIcon}
           padding="17px 12px"
           width="145px"
-          onClick={() => navigate("/masterData")}
+          onClick={() => navigate("/masterData/products")}
         />
       </div>
       <div
