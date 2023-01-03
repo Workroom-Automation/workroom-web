@@ -1,0 +1,19 @@
+#productDetails {
+  border: 1px solid #dadada;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: left;
+}
+#productDetailsCount {
+  color: #009aff;
+  font-weight: bold;
+  margin: 0px;
+}
+/* #processDetails {
+  margin-top: 14px;
+  border: 1px solid #dadada;
+  border-radius: 10px;
+  padding: 20px 30px 30px 30px;
+  text-align: left;
+  background: #d0ebff;
+} */

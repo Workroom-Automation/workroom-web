@@ -1,23 +1,151 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import SecondaryButton from "../../../common/crunches/secondaryButton/secondaryButton.js";
 import PrimaryButton from "../../../common/crunches/primaryButton/primaryButton.js";
 import PrimaryCountButton from "../../../common/crunches/primaryCountButton/primaryCountButton.js";
 import Container from "react-bootstrap/Container";
 import ProductTable from "../components/productTable/ui/productTable.js";
-// import Card from "../../components/cards/defaultCard";
-// import "./style.css";
-// import SearchIcon from "remixicon-react/SearchLineIcon";
-// import BuildingLineIcon from "remixicon-react/Building3LineIcon";
-// import MoreIcon from "remixicon-react/More2LineIcon";
-// import CustomButton from "../../components/button";
+import AddProductModal from "../components/addProductModal/ui/addProductModal.js";
+import AddProcessModal from "../components/addProcessModal/ui/addProcessModal.js";
+import { apiClientType } from "../../../clients/data/models/apiClientType.js";
+import { ApiClient } from "../../../clients/apiClient.js";
 import ServerLineIcon from "remixicon-react/ServerLineIcon";
 import AddLineIcon from "remixicon-react/AddLineIcon";
-// import AddNewModal from "../../components/modals/AddNewModal";
-// import SearchInput from "../../components/inputs/searchInput";
-// import { getAssetDetails, getAssets } from "./api";
-export default function Products({ type }) {
+import { DataFetchReducers } from "../../../common/states/dataFetch/dataFetchReducers.js";
+import { dataFetchActionType } from "../../../common/states/dataFetch/dataFetchActionType.js";
+
+export default function Products() {
+  const [showProductModal, setShowProductModal] = useState(false);
+  const [showProcessModal, setShowProcessModal] = useState(false);
+  const [productList, dispatchProductList] = useReducer(DataFetchReducers, {
+    data: null,
+    loading: false,
+    error: null,
+  });
+  const [stationList, dispatchStationList] = useReducer(DataFetchReducers, {
+    data: null,
+    loading: false,
+    error: null,
+  });
+  const [productDetails, dispatchProductDetails] = useReducer(
+    DataFetchReducers,
+    {
+      data: null,
+      loading: false,
+      error: null,
+    }
+  );
+  useEffect(() => {
+    (async () => {
+      let a = await getProductList();
+      getProductDetails(a?.id);
+    })();
+  }, []);
+
+  const getProductList = async () => {
+    dispatchProductList({
+      type: dataFetchActionType.loading,
+    });
+    let response = await ApiClient(
+      apiClientType.get,
+      process.env.REACT_APP_MASTER_BASE_URL,
+      `/asset/`,
+      {}
+    );
+    console.log(response);
+    dispatchProductList({
+      type: dataFetchActionType.data,
+      data: response,
+    });
+    return response[0];
+  };
+  const createProduct = async (values) => {
+    let response = await ApiClient(
+      apiClientType.post,
+      process.env.REACT_APP_MASTER_BASE_URL,
+      `/asset/`,
+      values
+    );
+    console.log(response);
+  };
+  const getProductDetails = async (productId) => {
+    dispatchProductDetails({
+      type: dataFetchActionType.loading,
+    });
+    let response = await ApiClient(
+      apiClientType.get,
+      process.env.REACT_APP_MASTER_BASE_URL,
+      `/aggregated/product/${productId}`,
+      {}
+    );
+    console.log(response);
+    dispatchProductDetails({
+      type: dataFetchActionType.data,
+      data: response,
+    });
+  };
+  const getStationList = async () => {
+    dispatchStationList({
+      type: dataFetchActionType.loading,
+    });
+    let response = await ApiClient(
+      apiClientType.get,
+      process.env.REACT_APP_MASTER_BASE_URL,
+      `/station/`,
+      {}
+    );
+    console.log(response);
+    dispatchStationList({
+      type: dataFetchActionType.data,
+      data: response,
+    });
+  };
+  const createProcess = async (values) => {
+    values = { ...values, asset_id: productDetails.data?.id };
+    if (productDetails.data.processes.length != 0) {
+      values["after_process_name"] =
+        productDetails.data.processes[
+          productDetails.data.processes.length - 1
+        ].process_name;
+    } else {
+      values["after_process_name"] = "";
+    }
+    let response = await ApiClient(
+      apiClientType.post,
+      process.env.REACT_APP_MASTER_BASE_URL,
+      `/asset/process`,
+      values
+    );
+    console.log(response);
+  };
   return (
     <Container fluid={true} style={{ padding: "40px" }}>
+      <AddProductModal
+        value={{
+          onSubmitModal: async (values) => {
+            await createProduct(values);
+            setShowProductModal(false);
+            await getProductList();
+          },
+          show: showProductModal,
+          onHide: () => {
+            setShowProductModal(false);
+          },
+        }}
+      />
+      <AddProcessModal
+        value={{
+          onSubmitModal: async (values) => {
+            await createProcess(values);
+            setShowProcessModal(false);
+            await getProductDetails(productDetails.data.id);
+          },
+          show: showProcessModal,
+          onHide: () => {
+            setShowProcessModal(false);
+          },
+          stationList: stationList,
+        }}
+      />
       <SecondaryButton
         value={{
           child: (
@@ -46,7 +174,10 @@ export default function Products({ type }) {
         <PrimaryCountButton
           value={{
             child: <>Total Products</>,
-            count: "01",
+            count:
+              productList?.data?.length >= 10
+                ? productList.data.length
+                : `0${productList?.data?.length}`,
           }}
         />
         <PrimaryButton
@@ -62,11 +193,24 @@ export default function Products({ type }) {
                 New Product
               </>
             ),
-            onClick: () => {},
+
+            onClick: () => {
+              setShowProductModal(true);
+            },
           }}
         />
       </div>
-      <ProductTable />
+      <ProductTable
+        value={{
+          productList: productList,
+          productDetails: productDetails.data,
+          onSelectProduct: (id) => {
+            getProductDetails(id);
+          },
+          getStationList: getStationList,
+          setShowModal: setShowProcessModal,
+        }}
+      />
     </Container>
   );
 }

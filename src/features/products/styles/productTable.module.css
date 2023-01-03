@@ -7,10 +7,16 @@
 #product {
   padding: 15px;
   font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  border-top: 1px solid #dadada;
+  border-bottom: 1px solid #dadada;
 }
 .selected {
   background: #d0ebff;
-  border: 1px solid #009aff;
+  border-left: 1px solid #009aff !important;
+  border-right: 1px solid #009aff !important;
 }
 #productId {
   color: #7d7676;

@@ -5,9 +5,8 @@ export default function PrimaryButton(props) {
     <button
       style={props.value.style}
       id={styles.button}
-      type="button"
+      type={props.value.type ? props.value.type : "button"}
       onClick={props.value.onClick}
-      styles={props.value.styles}
     >
       {props.value.child}
     </button>

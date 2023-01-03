@@ -7,7 +7,8 @@ import PrimaryButton from "../../../../../common/crunches/primaryButton/primaryB
 import AddLineIcon from "remixicon-react/AddLineIcon";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 
-export default function StationCard() {
+export default function StationCard(props) {
+  let station = props.value.station;
   return (
     <div id={styles.card}>
       <Row>
@@ -15,14 +16,12 @@ export default function StationCard() {
           <div style={{ border: "1px solid #dadada", height: "100%" }}>Img</div>
         </Col>
         <Col>
-          <p style={{ fontWeight: "bold", color: "black" }}>
-            Knock Down Station
-          </p>
-          <p style={{}}>Sample description of knock down station </p>
+          <p style={{ fontWeight: "bold", color: "black" }}>{station.name}</p>
+          <p style={{}}> {station?.description}</p>
           <hr />
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div>Station Code: A01235</div>
-            <div>Linked Process: 04</div>
+            <div>Station Code: {station?.station_code}</div>
+            <div>Linked Process: 00</div>
           </div>
         </Col>
       </Row>
