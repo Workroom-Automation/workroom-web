@@ -12,6 +12,13 @@ import ProcessAccordion from "../../processAccordion/ui/processAccordion.js";
 import Accordion from "react-bootstrap/Accordion";
 
 export default function ProductTable(props) {
+  let len = props.value.productList?.data?.length;
+  let emptyArr;
+  if (len) {
+    emptyArr = new Array(8 - len).fill(0);
+  } else {
+    emptyArr = new Array(8).fill(0);
+  }
   let productDetails = props.value.productDetails;
   let processes = productDetails?.processes?.sort((item1, item2) => {
     return item1.position - item2.position;
@@ -27,9 +34,11 @@ export default function ProductTable(props) {
         <Col
           md={4}
           style={{
-            borderRight: "1px solid #dadada",
+            maxHeight: "62.5vh",
+            overflow: "auto",
             paddingBottom: "10px",
             paddingRight: "0px",
+            borderRight: "1px solid #dadada",
           }}
         >
           {props.value.productList?.data?.map((item, index) => {
@@ -47,16 +56,23 @@ export default function ProductTable(props) {
               </div>
             );
           })}
+          {emptyArr.map((i, index) => {
+            return <div key={index} id={styles.emptyProduct}></div>;
+          })}
         </Col>
         <Col
           style={{
             margin: "13px 10px 10px 0px",
+            maxHeight: "60vh",
+            overflow: "auto",
           }}
         >
           <div id={styles.productDetails}>
             <Row>
               <Col md={3} style={{ borderRight: "1px solid #dadada" }}>
-                {productDetails?.name}
+                <span style={{ fontWeight: "bold" }}>
+                  {productDetails?.name}
+                </span>
                 <p id={styles.productId}>
                   {productDetails?.code
                     ? `Product Id: ${productDetails.code}`
@@ -125,7 +141,7 @@ export default function ProductTable(props) {
             {processes?.map((item, index) => {
               return (
                 <Row key={item.id} style={{ marginTop: "30px" }}>
-                  <Col xs={1} style={{ marginTop: "30px" }}>
+                  <Col xs={1} style={{ marginTop: "40px" }}>
                     <div
                       style={{
                         borderRadius: "50%",
@@ -137,6 +153,9 @@ export default function ProductTable(props) {
                       }}
                     >
                       <div style={{ paddingTop: "2.5px" }}>{index + 1}</div>
+                      {index != processes?.length - 1 ? (
+                        <div className={styles.vl}></div>
+                      ) : null}
                     </div>
                   </Col>
                   <Col>

@@ -11,8 +11,8 @@ import Accordion from "react-bootstrap/Accordion";
 export default function ProcessAccordion(props) {
   let processDetails = props.value.processDetails;
   return (
-    <Accordion.Item eventKey={processDetails.id}>
-      <div style={{ padding: "10px 15px 0px 0px" }}>
+    <Accordion.Item id={styles.processDetails} eventKey={processDetails.id}>
+      <div style={{ padding: "0px 15px 0px 0px" }}>
         <MoreLineIcon
           style={{
             float: "right",
@@ -21,12 +21,12 @@ export default function ProcessAccordion(props) {
           }}
         />
       </div>
-      <Accordion.Header>
+      <Accordion.Header id={styles.header}>
         <Col md={8} style={{ fontWeight: "bold" }}>
           {processDetails.process_name}
         </Col>
         <Col md={3}>
-          Linked Stations :{" "}
+          <span style={{ color: "#7D7676" }}>Linked Stations :</span>{" "}
           <span id={styles.processDetailsCount}>
             {processDetails.stations.length >= 10
               ? processDetails.stations.length
@@ -34,9 +34,11 @@ export default function ProcessAccordion(props) {
           </span>
         </Col>
       </Accordion.Header>
-      <Accordion.Body style={{ textAlign: "left" }}>
+      <Accordion.Body
+        style={{ textAlign: "left", background: "white", borderRadius: "10px" }}
+      >
         <div>
-          Description :{" "}
+          <span style={{ color: "#7D7676" }}>Description :</span>{" "}
           <span style={{ fontWeight: "bold" }}>
             {processDetails.process_description}
           </span>
@@ -44,16 +46,18 @@ export default function ProcessAccordion(props) {
         <hr />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
-            Apps Linked : <span style={{ fontWeight: "bold" }}>00</span>
+            <span style={{ color: "#7D7676" }}>Apps Linked : </span>
+            <span style={{ fontWeight: "bold" }}>00</span>
           </div>
           <div>
-            Sheets Linked : <span style={{ fontWeight: "bold" }}>00</span>
+            <span style={{ color: "#7D7676" }}>Sheets Linked : </span>
+            <span style={{ fontWeight: "bold" }}>00</span>
           </div>
         </div>
         <hr />
 
         <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-          Linked Stations :{" "}
+          <span style={{ color: "#7D7676" }}> Linked Stations :</span>{" "}
           {processDetails.stations.map((item) => {
             return (
               <div

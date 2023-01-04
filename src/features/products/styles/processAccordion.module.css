@@ -9,11 +9,10 @@
   font-weight: bold;
   margin: 0px;
 }
-/* #processDetails {
-  margin-top: 14px;
+#processDetails {
   border: 1px solid #dadada;
   border-radius: 10px;
-  padding: 20px 30px 30px 30px;
+  padding: 10px;
   text-align: left;
   background: #d0ebff;
-} */
+}
