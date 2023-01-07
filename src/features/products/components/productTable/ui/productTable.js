@@ -5,11 +5,15 @@ import More2LineIcon from "remixicon-react/More2LineIcon";
 import MoreLineIcon from "remixicon-react/MoreLineIcon";
 import PrimaryButton from "../../../../../common/crunches/primaryButton/primaryButton.js";
 import AddLineIcon from "remixicon-react/AddLineIcon";
+import PencilLineIcon from "remixicon-react/PencilLineIcon";
+import DeleteBin6LineIcon from "remixicon-react/DeleteBin6LineIcon";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import { useState } from "react";
 import Collapse from "react-bootstrap/Collapse";
 import ProcessAccordion from "../../processAccordion/ui/processAccordion.js";
 import Accordion from "react-bootstrap/Accordion";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
 
 export default function ProductTable(props) {
   let len = props.value.productList?.data?.length;
@@ -25,6 +29,10 @@ export default function ProductTable(props) {
   });
   if (props.value.productList.loading) {
     return "...loading";
+  } else {
+    if (len == 0 || len == undefined) {
+      return <div>No Products</div>;
+    }
   }
   return (
     <div id={styles.table}>
@@ -91,14 +99,59 @@ export default function ProductTable(props) {
                 Apps Linked <p id={styles.productDetailsCount}>00 </p>
               </Col>
               <Col>
-                <More2LineIcon
-                  style={{
-                    float: "right",
-                    color: "#7D7676",
-                    marginTop: "10px",
-                    cursor: "pointer",
-                  }}
-                />
+                <OverlayTrigger
+                  trigger="click"
+                  placement="bottom"
+                  overlay={
+                    <Popover id="popover-basic">
+                      <Popover.Body
+                        style={{
+                          padding: "7px",
+                          marginTop: "10px",
+                          textAlign: "center",
+                        }}
+                      >
+                        <div style={{ cursor: "pointer" }}>
+                          <PencilLineIcon
+                            size="20px"
+                            style={{
+                              color: "#7D7676",
+                              marginRight: "10px",
+                              marginBottom: "3px",
+                            }}
+                          />
+                          Edit Details
+                        </div>
+                        <hr style={{ margin: "10px" }} />
+                        <div style={{ cursor: "pointer" }}>
+                          <DeleteBin6LineIcon
+                            size="20px"
+                            style={{
+                              color: "#7D7676",
+                              marginRight: "10px",
+                              marginBottom: "3px",
+                            }}
+                          />
+                          Delete Product
+                        </div>
+                      </Popover.Body>
+                    </Popover>
+                  }
+                >
+                  <button
+                    type="button"
+                    style={{
+                      float: "right",
+                      marginTop: "10px",
+                      background: "white",
+                      border: "none",
+                      color: "#7D7676",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <More2LineIcon />
+                  </button>
+                </OverlayTrigger>
               </Col>
             </Row>
           </div>
@@ -136,35 +189,38 @@ export default function ProductTable(props) {
             />
           </div>
           <br />
-
-          <Accordion>
-            {processes?.map((item, index) => {
-              return (
-                <Row key={item.id} style={{ marginTop: "30px" }}>
-                  <Col xs={1} style={{ marginTop: "40px" }}>
-                    <div
-                      style={{
-                        borderRadius: "50%",
-                        width: "30px",
-                        height: "30px",
-                        color: "white",
-                        background: "#009AFF",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      <div style={{ paddingTop: "2.5px" }}>{index + 1}</div>
-                      {index != processes?.length - 1 ? (
-                        <div className={styles.vl}></div>
-                      ) : null}
-                    </div>
-                  </Col>
-                  <Col>
-                    <ProcessAccordion value={{ processDetails: item }} />
-                  </Col>
-                </Row>
-              );
-            })}
-          </Accordion>
+          {processes?.length != 0 ? (
+            <Accordion>
+              {processes?.map((item, index) => {
+                return (
+                  <Row key={item.id} style={{ marginTop: "30px" }}>
+                    <Col xs={1} style={{ marginTop: "40px" }}>
+                      <div
+                        style={{
+                          borderRadius: "50%",
+                          width: "30px",
+                          height: "30px",
+                          color: "white",
+                          background: "#009AFF",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        <div style={{ paddingTop: "2.5px" }}>{index + 1}</div>
+                        {index != processes?.length - 1 ? (
+                          <div className={styles.vl}></div>
+                        ) : null}
+                      </div>
+                    </Col>
+                    <Col>
+                      <ProcessAccordion value={{ processDetails: item }} />
+                    </Col>
+                  </Row>
+                );
+              })}
+            </Accordion>
+          ) : (
+            <div>No Processes</div>
+          )}
         </Col>
       </Row>
     </div>

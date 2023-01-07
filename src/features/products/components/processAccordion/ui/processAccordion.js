@@ -12,16 +12,18 @@ export default function ProcessAccordion(props) {
   let processDetails = props.value.processDetails;
   return (
     <Accordion.Item id={styles.processDetails} eventKey={processDetails.id}>
-      <div style={{ padding: "0px 15px 0px 0px" }}>
+      <Accordion.Header id={styles.header}>
         <MoreLineIcon
           style={{
-            float: "right",
+            position: "absolute",
+            top: "0",
+            right: "17",
             color: "#7D7676",
             cursor: "pointer",
           }}
         />
-      </div>
-      <Accordion.Header id={styles.header}>
+        <br />
+        <br />
         <Col md={8} style={{ fontWeight: "bold" }}>
           {processDetails.process_name}
         </Col>
@@ -58,21 +60,27 @@ export default function ProcessAccordion(props) {
 
         <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
           <span style={{ color: "#7D7676" }}> Linked Stations :</span>{" "}
-          {processDetails.stations.map((item) => {
-            return (
-              <div
-                key={item.id}
-                style={{
-                  marginTop: "-5px",
-                  border: "1px solid #dadada",
-                  padding: "3px 5px 3px 5px",
-                  borderRadius: "10px",
-                }}
-              >
-                {item.name}
-              </div>
-            );
-          })}
+          {processDetails.stations.length != 0 ? (
+            <>
+              {processDetails.stations.map((item) => {
+                return (
+                  <div
+                    key={item.id}
+                    style={{
+                      marginTop: "-5px",
+                      border: "1px solid #dadada",
+                      padding: "3px 5px 3px 5px",
+                      borderRadius: "10px",
+                    }}
+                  >
+                    {item.name}
+                  </div>
+                );
+              })}
+            </>
+          ) : (
+            <div>No Stations</div>
+          )}
         </div>
       </Accordion.Body>
     </Accordion.Item>

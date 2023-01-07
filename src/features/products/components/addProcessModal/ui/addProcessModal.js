@@ -65,6 +65,7 @@ export default function AddProcessModal(props) {
           <Form.Group className="mb-3">
             <Form.Label>Link Stations</Form.Label>
             <Multiselect
+              avoidHighlightFirstOption={true}
               options={
                 props.value.stationList.data == null
                   ? []

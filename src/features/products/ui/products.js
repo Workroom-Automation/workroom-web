@@ -177,6 +177,8 @@ export default function Products() {
             count:
               productList?.data?.length >= 10
                 ? productList.data.length
+                : productList?.data?.length == undefined
+                ? `00`
                 : `0${productList?.data?.length}`,
           }}
         />

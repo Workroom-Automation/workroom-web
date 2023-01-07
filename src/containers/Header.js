@@ -1,8 +1,10 @@
 import React from "react";
 import "./Common.css";
-import {logo, emptyProfile} from ".././assets/images";
-// import { EmptyProfile, Logo, NotficationIcon } from "../Assets/assets";
-export default function TopBar() {  
+import { logo, emptyProfile } from ".././assets/images";
+import Container from "react-bootstrap/Container";
+import Navbar from "react-bootstrap/Navbar";
+
+export default function TopBar() {
   return (
     <div className="top-nav-main">
       <div className="d-flex justify-content-between">
@@ -16,13 +18,18 @@ export default function TopBar() {
         </div>
         <div className="nav-profile d-flex">
           {/* <NotficationIcon /> */}
-          <img  src={emptyProfile} alt="Profile" />
+          <img src={emptyProfile} alt="Profile" />
           <span>
             <span>Kranti Kiran</span>
-            <br /> <span style={{
+            <br />{" "}
+            <span
+              style={{
                 fontSize: "14px",
                 color: "#7D7676",
-            }}>Admin</span>
+              }}
+            >
+              Admin
+            </span>
           </span>
         </div>
       </div>
