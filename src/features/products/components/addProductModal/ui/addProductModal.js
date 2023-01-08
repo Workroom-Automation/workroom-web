@@ -8,26 +8,50 @@ import PrimaryButton from "../../../../../common/crunches/primaryButton/primaryB
 export default function AddProductModal(props) {
   const [productName, setProductName] = useState("");
   const [productCode, setProductCode] = useState("");
-  const [productImage, setProductImage] = useState();
-
+  const [productImage, setProductImage] = useState([]);
+  useEffect(() => {
+    if (props.value.isEdit) {
+      setProductName(props.value.productDetails?.name);
+      setProductCode(props.value.productDetails?.code);
+    }
+  }, [props.value.show]);
+  const onCloseModal = () => {
+    setProductName("");
+    setProductCode("");
+    setProductImage([]);
+    props.value.onHide();
+    props.value.removeEdit();
+  };
   return (
     <Modal
       show={props.value.show}
-      onHide={props.value.onHide}
+      onHide={onCloseModal}
       style={{ marginTop: "150px" }}
     >
       <Modal.Header closeButton>
         <Modal.Title style={{ fontWeight: "bold" }}>
-          <span style={{ marginLeft: "10px" }}>New Product Details</span>
+          <span style={{ marginLeft: "10px" }}>
+            {props.value.isEdit
+              ? "Edit Product Details"
+              : "New Product Details"}
+          </span>
         </Modal.Title>
       </Modal.Header>
       <Form
         onSubmit={(e) => {
           e.preventDefault();
-          props.value.onSubmitModal({
-            name: productName,
-            code: productCode,
-          });
+          if (props.value.isEdit) {
+            props.value.onEditModal({
+              name: productName,
+              code: productCode,
+            });
+          } else {
+            props.value.onSubmitModal({
+              name: productName,
+              code: productCode,
+            });
+          }
+          onCloseModal();
         }}
       >
         <Modal.Body>
@@ -35,6 +59,7 @@ export default function AddProductModal(props) {
             <Form.Group as={Col}>
               <Form.Label>Product Name</Form.Label>
               <Form.Control
+                defaultValue={productName}
                 onChange={(e) => setProductName(e.target.value)}
                 placeholder="Product Name"
                 required
@@ -45,6 +70,7 @@ export default function AddProductModal(props) {
           <Form.Group className="mb-3">
             <Form.Label>Product Code</Form.Label>
             <Form.Control
+              defaultValue={productCode}
               onChange={(e) => setProductCode(e.target.value)}
               placeholder="Product Code"
             />
@@ -60,7 +86,7 @@ export default function AddProductModal(props) {
           <PrimaryButton
             value={{
               type: "submit",
-              child: "Create Product",
+              child: props.value.isEdit ? "Save Changes" : "Create Product",
               style: { padding: "7px 10px 7px 10px" },
             }}
           />

@@ -14,6 +14,7 @@ import { DataFetchReducers } from "../../../common/states/dataFetch/dataFetchRed
 import { dataFetchActionType } from "../../../common/states/dataFetch/dataFetchActionType.js";
 
 export default function Products() {
+  const [isEditProductModal, setIsEditProductModal] = useState(false);
   const [showProductModal, setShowProductModal] = useState(false);
   const [showProcessModal, setShowProcessModal] = useState(false);
   const [productList, dispatchProductList] = useReducer(DataFetchReducers, {
@@ -63,6 +64,15 @@ export default function Products() {
       apiClientType.post,
       process.env.REACT_APP_MASTER_BASE_URL,
       `/asset/`,
+      values
+    );
+    console.log(response);
+  };
+  const editProduct = async (values) => {
+    let response = await ApiClient(
+      apiClientType.put,
+      process.env.REACT_APP_MASTER_BASE_URL,
+      `/asset/${productDetails.data.id}`,
       values
     );
     console.log(response);
@@ -118,17 +128,26 @@ export default function Products() {
     console.log(response);
   };
   return (
-    <Container fluid={true} style={{ padding: "40px" }}>
+    <Container fluid={true} style={{ padding: "40px 40px 0px 40px" }}>
       <AddProductModal
         value={{
+          productDetails: productDetails.data,
+          isEdit: isEditProductModal,
+          onEditModal: async (values) => {
+            await editProduct(values);
+            await getProductList();
+            await getProductDetails(productDetails.data.id);
+          },
           onSubmitModal: async (values) => {
             await createProduct(values);
-            setShowProductModal(false);
             await getProductList();
           },
           show: showProductModal,
           onHide: () => {
             setShowProductModal(false);
+          },
+          removeEdit: () => {
+            setIsEditProductModal(false);
           },
         }}
       />
@@ -209,8 +228,14 @@ export default function Products() {
           onSelectProduct: (id) => {
             getProductDetails(id);
           },
-          getStationList: getStationList,
-          setShowModal: setShowProcessModal,
+          onShowProcessModal: () => {
+            setShowProcessModal(true);
+            getStationList();
+          },
+          onShowProductModal: () => {
+            setShowProductModal(true);
+            setIsEditProductModal(true);
+          },
         }}
       />
     </Container>

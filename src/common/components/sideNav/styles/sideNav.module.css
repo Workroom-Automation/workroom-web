@@ -1,0 +1,29 @@
+#sideNav {
+  z-index: 0;
+  width: 100px;
+  height: 92.5vh;
+  background: white;
+  border: 1px solid #dadada;
+  padding-top: 25px;
+  text-align: center;
+}
+#icon {
+  color: #7d7676;
+}
+#iconContainer {
+  padding: 10px;
+  margin: 20px;
+  border: 1px solid #dadada;
+  border-radius: 11px;
+  cursor: pointer;
+  margin-bottom: 40px;
+}
+#iconContainer:hover {
+  background: linear-gradient(90deg, #00c6fb 0%, #005bea 100%);
+}
+#iconContainer:hover #icon {
+  color: white;
+}
+.activeContainer {
+  background: linear-gradient(90deg, #00c6fb 0%, #005bea 100%);
+}

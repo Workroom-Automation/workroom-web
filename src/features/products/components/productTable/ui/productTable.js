@@ -111,7 +111,10 @@ export default function ProductTable(props) {
                           textAlign: "center",
                         }}
                       >
-                        <div style={{ cursor: "pointer" }}>
+                        <div
+                          style={{ cursor: "pointer" }}
+                          onClick={() => props.value.onShowProductModal()}
+                        >
                           <PencilLineIcon
                             size="20px"
                             style={{
@@ -178,8 +181,7 @@ export default function ProductTable(props) {
                   </>
                 ),
                 onClick: () => {
-                  props.value.setShowModal(true);
-                  props.value.getStationList();
+                  props.value.onShowProcessModal();
                 },
                 style: {
                   padding: "7px",

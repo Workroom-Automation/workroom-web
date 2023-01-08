@@ -1,0 +1,11 @@
+#navbar {
+  z-index: 1;
+  background: white;
+  height: 7.5vh;
+  box-shadow: 0 6px 2px -2px rgba(0, 0, 0, 0.2);
+}
+#image {
+  border-radius: 50px;
+  height: 50px;
+  width: 50px;
+}

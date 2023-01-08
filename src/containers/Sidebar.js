@@ -13,7 +13,7 @@ export default function SideBar() {
     {
       name: "Master Data",
       icon: ({ color }) => <ServerIcon color={color} />,
-      route: "/masterData",
+      route: "/masterData/stations",
     },
     {
       name: "People",
@@ -23,7 +23,7 @@ export default function SideBar() {
     {
       name: "App Builder",
       icon: ({ color }) => <PencilLineIcon color={color} />,
-      route: "/appbuilder", 
+      route: "/appbuilder",
       //   icon: <CheckList />,
     },
   ];
@@ -59,7 +59,7 @@ export default function SideBar() {
               onClick={(e) => {
                 setSelected(item.name);
                 console.log(item.route);
-                item.route&&navigate(item.route);
+                item.route && navigate(item.route);
               }}
               className="btn"
               key={index}

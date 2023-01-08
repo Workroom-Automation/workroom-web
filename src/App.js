@@ -8,13 +8,15 @@ import {
   useLocation,
   matchPath,
 } from "react-router-dom";
-import Header from "./containers/Header";
 import Layout from "./containers/Layout";
-import Sidebar from "./containers/Sidebar";
 import allRoutes from "./routes/allRoutes";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
+import CustomNavbar from "./common/components/navbar/ui/navbar.js";
+import SideNav from "./common/components/sideNav/ui/sideNav.js";
+import Container from "react-bootstrap/Container";
+import { sideNavRoutes } from "./utils/sideNavRoutes.js";
 
 export default function App() {
   let location = useLocation();
@@ -73,63 +75,48 @@ export default function App() {
   }
   if (isAuthenticated) {
     return (
-      <>
-        <div
-          style={{
-            display: checkRouteWithNav(routesWithTopNavigation, currentRoute)
-              ? "block"
-              : "none",
-          }}
-        >
-          <Header />
-        </div>
-        <div
-          style={{
-            display: checkRouteWithNav(routesWithSideNavigation, currentRoute)
-              ? "block"
-              : "none",
-          }}
-        >
-          <Sidebar />
-        </div>
-        <Routes>
-          {authRoutes.map((route, idx) => {
-            return (
-              route.component && (
-                <Route
-                  key={idx}
-                  path={route.path}
-                  name={route.name}
-                  element={<Layout component={route.component} />}
-                />
-              )
-            );
-          })}
-          {allRoutes.map((route, idx) => {
-            return (
-              route.component && (
-                <Route
-                  key={idx}
-                  path={route.path}
-                  name={route.name}
-                  element={
-                    <Layout
-                      type={
-                        checkRouteWithNav(routesWithSideNavigation, route.path)
-                          ? "with-nav"
-                          : "without-nav"
+      <div>
+        <CustomNavbar />
+        <div style={{ display: "flex" }}>
+          <div
+            style={{
+              display: checkRouteWithNav(routesWithSideNavigation, currentRoute)
+                ? "block"
+                : "none",
+            }}
+          >
+            <SideNav routes={sideNavRoutes} />
+          </div>
+          <Container fluid={true}>
+            <Routes>
+              {allRoutes.map((route, idx) => {
+                return (
+                  route.component && (
+                    <Route
+                      key={idx}
+                      path={route.path}
+                      name={route.name}
+                      element={
+                        <Layout
+                          type={
+                            checkRouteWithNav(
+                              routesWithSideNavigation,
+                              route.path
+                            )
+                              ? "with-nav"
+                              : "without-nav"
+                          }
+                          component={route.component}
+                        />
                       }
-                      component={route.component}
                     />
-                  }
-                />
-              )
-            );
-          })}
-
-          {/* <Route exact path="/" element={<Layout />} /> */}
-        </Routes>
-      </>
+                  )
+                );
+              })}
+            </Routes>
+          </Container>
+        </div>
+      </div>
     );
   } else {
     loginWithRedirect();

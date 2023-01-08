@@ -27,7 +27,7 @@ const allRoutes = [
     component: Stations,
   },
   {
-    path: "/people",
+    path: "/masterData/people",
     name: "People",
     component: People,
   },
