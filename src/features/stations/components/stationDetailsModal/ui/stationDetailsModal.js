@@ -6,11 +6,17 @@ import { useState, useEffect } from "react";
 import PrimaryButton from "../../../../../common/crunches/primaryButton/primaryButton.js";
 
 export default function StationDetailsModal(props) {
+  let station = props.value.selectedStation;
   const [stationName, setStationName] = useState("");
   const [stationDescription, setStationDescription] = useState("");
   const [stationCode, setStationCode] = useState("");
-  const [stationImage, setStationImage] = useState();
+  const [stationImage, setStationImage] = useState([]);
 
+  useEffect(() => {
+    setStationName(station?.name);
+    setStationCode(station?.station_code);
+    setStationDescription(station?.description);
+  }, [props.value.selectedStation]);
   return (
     <Modal
       show={props.value.show}
@@ -30,6 +36,7 @@ export default function StationDetailsModal(props) {
             description: stationDescription,
             station_code: stationCode,
           });
+          props.value.onHide();
         }}
       >
         <Modal.Body>
@@ -37,6 +44,7 @@ export default function StationDetailsModal(props) {
             <Form.Group as={Col}>
               <Form.Label>Station Name</Form.Label>
               <Form.Control
+                value={stationName}
                 onChange={(e) => setStationName(e.target.value)}
                 placeholder="Station Name"
                 required
@@ -47,6 +55,7 @@ export default function StationDetailsModal(props) {
             <Form.Group as={Col}>
               <Form.Label>Station Description</Form.Label>
               <Form.Control
+                value={stationDescription}
                 onChange={(e) => setStationDescription(e.target.value)}
                 placeholder="Station Description"
               />
@@ -56,6 +65,7 @@ export default function StationDetailsModal(props) {
           <Form.Group className="mb-3">
             <Form.Label>Station Code</Form.Label>
             <Form.Control
+              value={stationCode}
               onChange={(e) => setStationCode(e.target.value)}
               placeholder="Station Code"
             />

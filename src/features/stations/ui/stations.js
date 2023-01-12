@@ -16,6 +16,7 @@ import AddStationModal from "../components/addStationModal/ui/addStationModal.js
 import StationDetailsModal from "../components/stationDetailsModal/ui/stationDetailsModal.js";
 
 export default function Stations() {
+  const [selectedStation, setSelectedStation] = useState();
   const [showStationModal, setShowStationModal] = useState(false);
   const [showStationDetailsModal, setShowStationDetailsModal] = useState(false);
   const [stationList, dispatchStationList] = useReducer(DataFetchReducers, {
@@ -51,6 +52,15 @@ export default function Stations() {
     );
     console.log(response);
   };
+  const updateStation = async (values) => {
+    let response = await ApiClient(
+      apiClientType.patch,
+      process.env.REACT_APP_MASTER_BASE_URL,
+      `/station/${selectedStation.id}`,
+      values
+    );
+    console.log(response);
+  };
   return (
     <Container fluid={true} style={{ padding: "40px" }}>
       <AddStationModal
@@ -68,10 +78,10 @@ export default function Stations() {
       />
       <StationDetailsModal
         value={{
+          selectedStation: selectedStation,
           onSubmitModal: async (values) => {
-            // await createStation(values);
-            // setShowStationModal(false);
-            // await getStationList();
+            await updateStation(values);
+            await getStationList();
           },
           show: showStationDetailsModal,
           onHide: () => {
@@ -90,7 +100,7 @@ export default function Stations() {
                   color: "#7D7676",
                 }}
               />
-              Stations
+              Master Data | Stations
             </>
           ),
         }}
@@ -109,6 +119,8 @@ export default function Stations() {
             count:
               stationList?.data?.length >= 10
                 ? stationList.data.length
+                : stationList?.data?.length == undefined
+                ? `00`
                 : `0${stationList?.data?.length}`,
           }}
         />
@@ -139,7 +151,10 @@ export default function Stations() {
             {stationList?.data?.map((item, index) => {
               return (
                 <Col
-                  onClick={() => setShowStationDetailsModal(true)}
+                  onClick={() => {
+                    setSelectedStation(item);
+                    setShowStationDetailsModal(true);
+                  }}
                   key={item.id}
                   md={6}
                   style={{ marginTop: "15px", cursor: "pointer" }}

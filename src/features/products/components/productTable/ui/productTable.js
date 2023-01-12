@@ -36,13 +36,12 @@ export default function ProductTable(props) {
   }
   return (
     <div id={styles.table}>
-      <p style={{ margin: "10px" }}>Product Details</p>
+      <p style={{ margin: "10px", padding: "10px" }}>Product Details</p>
       <hr style={{ margin: "0px" }} />
       <Row>
         <Col
           md={4}
           style={{
-            maxHeight: "62.5vh",
             overflow: "auto",
             paddingBottom: "10px",
             paddingRight: "0px",
@@ -64,14 +63,11 @@ export default function ProductTable(props) {
               </div>
             );
           })}
-          {emptyArr.map((i, index) => {
-            return <div key={index} id={styles.emptyProduct}></div>;
-          })}
         </Col>
         <Col
           style={{
-            margin: "13px 10px 10px 0px",
-            maxHeight: "60vh",
+            margin: "13px 10px 30px 0px",
+            height: "55vh",
             overflow: "auto",
           }}
         >
@@ -196,7 +192,7 @@ export default function ProductTable(props) {
               {processes?.map((item, index) => {
                 return (
                   <Row key={item.id} style={{ marginTop: "30px" }}>
-                    <Col xs={1} style={{ marginTop: "40px" }}>
+                    <Col xs={1} style={{ marginTop: "35px" }}>
                       <div
                         style={{
                           borderRadius: "50%",

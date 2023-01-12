@@ -9,12 +9,19 @@ export default function AddStationModal(props) {
   const [stationName, setStationName] = useState("");
   const [stationDescription, setStationDescription] = useState("");
   const [stationCode, setStationCode] = useState("");
-  const [stationImage, setStationImage] = useState();
+  const [stationImage, setStationImage] = useState([]);
+  const onCloseModal = () => {
+    setStationName("");
+    setStationCode("");
+    setStationDescription("");
+    setStationImage([]);
+    props.value.onHide();
+  };
 
   return (
     <Modal
       show={props.value.show}
-      onHide={props.value.onHide}
+      onHide={onCloseModal}
       style={{ marginTop: "150px" }}
     >
       <Modal.Header closeButton>
@@ -30,6 +37,7 @@ export default function AddStationModal(props) {
             description: stationDescription,
             station_code: stationCode,
           });
+          onCloseModal();
         }}
       >
         <Modal.Body>

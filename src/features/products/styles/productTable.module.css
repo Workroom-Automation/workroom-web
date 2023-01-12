@@ -3,7 +3,7 @@
   background: white;
   border-radius: 10px;
   text-align: center;
-  max-height: 67vh;
+  min-height: 60vh;
 }
 #product {
   padding: 20px;
@@ -12,10 +12,6 @@
   /* margin-bottom: 20px; */
   /* border-radius: 20px; */
   border: 1px solid #dadada;
-}
-#emptyProduct {
-  border: 1px solid #dadada;
-  height: 79.5px;
 }
 .selected {
   background: #d0ebff;

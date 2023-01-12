@@ -176,7 +176,7 @@ export default function Products() {
                   color: "#7D7676",
                 }}
               />
-              Assets
+              Master Data | Assets
             </>
           ),
           onClick: () => {},
